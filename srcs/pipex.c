@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pixep.c                                            :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 11:15:13 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/14 16:42:34 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/03/15 22:06:26 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,12 @@ void	forking(t_cmd *cmd)
 		exec_cmd1(cmd);
 	}
 	else
-		wait(&status1);
+		waitpid(nb_fork1, &status1, 0);
 	if (nb_fork2 == 0) {
 		exec_cmd2(cmd);
 	}
 	else
-		wait(&status2);
-
+		waitpid(nb_fork2, &status2, 0);
 }
 
 t_cmd	*parsing(char **argv, char **envp)
@@ -62,13 +61,4 @@ int main(int argc, char **argv, char **envp)
 		return (1);
 	cmd = parsing(argv, envp);
 	forking(cmd);
-	//pipex(argv, envp);
-	// int fd = access("sample.txt", F_OK);
-    // if(fd == -1){
-    //         printf("Error Number : %d\n", errno);
-    //     perror("Error Description:");
-    // }
-    //     else
-    //             printf("No error\n");
-    // return 0;
 }

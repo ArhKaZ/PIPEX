@@ -54,7 +54,7 @@ $(LIBFT_A)		:	FORCE
 				make -C $(LIBFT_D)
 
 fsanitize		:	$(MLX_A) $(LIBFT_A) $(OBJS_D) $(HEAD_D)$(HEAD) $(OBJS)
-				$(CC) $(CCFLAG) $(FSA) -o $(NAME) $(OBJS) $(LIBFT_A) $(MLX_A) $(MLXFLAG)
+				$(CC) $(CCFLAG) $(FSA) -o $(NAME) $(OBJS) $(LIBFT_A)
 
 bonus			:	$(NAME_B)
 
