@@ -47,23 +47,30 @@ char	*get_path_command(char *command, char **envp)
 {
 	char	**path;
 	int		i;
-	int		exist;
 	char	*full_path;
 
 	i = 0;
-	path = get_path(envp);
-	if (path == NULL)
-		return (false);
+	if (command == NULL)
+		return (NULL);
+	if (ft_strncmp(command, "./", 2) != 0)
+		path = get_path(envp);
+	else
+	{
+		if (access(command + 2, F_OK) != -1)
+			return (command);
+	}
 	while (path[i])
 	{
 		if (access(get_full_path(path[i], command), F_OK) != -1)
 		{
 			full_path = get_full_path(path[i], command);
 			free_char_tab(path);
+			free(command);
 			return (full_path);
 		}
 		i++;
 	}
+	free(command);
 	free_char_tab(path);
 	return (NULL);
 }

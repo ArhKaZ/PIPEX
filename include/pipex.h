@@ -18,23 +18,24 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <wait.h>
 # include "../Libft_w_a/libft.h"
-
-typedef struct s_argu
-{
-	int		fd_pipe[2];
-	int		fd_files[2];
-}				t_argu;
 
 typedef struct s_cmd
 {
-	char	*path;
-	char	*arg1;
-	char	*arg2;
-	char	*arg3;
+	char 	**cmd1;
+	char 	**cmd2;
+	int 	fd[2];
+	char 	*infile;
+	char 	*outfile;
 }				t_cmd;
 
 void	free_char_tab(char **tab);
 
 char	*get_path_command(char *command, char **envp);
+
+void	exec_cmd1(t_cmd *cmd);
+
+void	exec_cmd2(t_cmd *cmd);
+
 #endif

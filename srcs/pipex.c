@@ -12,42 +12,56 @@
 
 #include "../include/pipex.h"
 
-t_cmd	get_command(char *arg)
+void	forking(t_cmd *cmd)
 {
+	int nb_fork1;
+	int nb_fork2;
+	int status1;
+	int status2;
+
+	nb_fork1 = fork();
+	nb_fork2 = fork();
+	if (nb_fork1 == 0) {
+		exec_cmd1(cmd);
+	}
+	else
+		wait(&status1);
+	if (nb_fork2 == 0) {
+		exec_cmd2(cmd);
+	}
+	else
+		wait(&status2);
 
 }
 
-void	pipex(char **argv, char **envp)
+t_cmd	*parsing(char **argv, char **envp)
 {
-	char	**cmd1;
-	char	**cmd2;
-	// t_argu	*arg;
-	// int 	nb_fork;
-	// arg = malloc(sizeof(t_argu));
-	// arg->fd_files[0] = open(argv[1], O_RDONLY);
-	// arg->fd_files[1] = open(argv[4], O_WRONLY);
-	// if (arg->fd_files[0] == -1 || arg->fd_files[1] == -1)
-	// {
-	// 	free(arg);
-	// 	return (ft_putstr_fd("Error\nFiles don't exist", 2));
-	// }
-	// pipe(arg->fd_pipe);
-	// nb_fork = fork();
-	cmd1 = ft_split(argv[2], ' ');
-	cmd2 = ft_split(argv[3], ' ');
-	if (cmd1[0] == NULL || cmd2[0] == NULL)
-		return ;
-	cmd1 = get_path_command(cmd1[0], envp);
-	cmd2 = get_path_command(cmd2[0], envp);
-	if (cmd1[0] == NULL || cmd2[0] == NULL)
-		return ;
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(t_cmd));
+	cmd->cmd1 = ft_split(argv[2], ' ');
+	cmd->cmd2 = ft_split(argv[3], ' ');
+	if (cmd->cmd1[0] == NULL || cmd->cmd2[0] == NULL)
+		return (NULL);
+	cmd->cmd1[0] = get_path_command(cmd->cmd1[0], envp);
+	cmd->cmd2[0] = get_path_command(cmd->cmd2[0], envp);
+	cmd->infile = ft_strdup(argv[1]);
+	cmd->outfile = ft_strdup(argv[4]);
+	if (cmd->cmd1[0] == NULL || cmd->cmd2[0] == NULL
+		|| cmd->infile == NULL || cmd->outfile == NULL)
+		return (NULL);
+	pipe(cmd->fd);
+	return (cmd);
 }
 
 int main(int argc, char **argv, char **envp)
 {
-	pipex(argv, envp);
-	//if (argc < 2 || argc > 5)
-		//return (1);
+	t_cmd	*cmd;
+
+	if (argc < 2 || argc > 5)
+		return (1);
+	cmd = parsing(argv, envp);
+	forking(cmd);
 	//pipex(argv, envp);
 	// int fd = access("sample.txt", F_OK);
     // if(fd == -1){
