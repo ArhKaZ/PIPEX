@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <wait.h>
+# include <string.h>
 # include "../Libft_w_a/libft.h"
 
 typedef struct s_cmd
@@ -26,8 +27,8 @@ typedef struct s_cmd
 	char 	**cmd1;
 	char 	**cmd2;
 	int 	fd[2];
-	char 	*infile;
-	char 	*outfile;
+	int 	infile;
+	int 	outfile;
 }				t_cmd;
 
 void	free_char_tab(char **tab);
@@ -38,4 +39,5 @@ void	exec_cmd1(t_cmd *cmd);
 
 void	exec_cmd2(t_cmd *cmd);
 
+void	free_cmd(t_cmd *cmd);
 #endif

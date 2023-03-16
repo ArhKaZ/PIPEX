@@ -24,3 +24,14 @@ void	free_char_tab(char **tab)
 	}
 	free(tab);
 }
+
+void	free_cmd(t_cmd *cmd)
+{
+	free_char_tab(cmd->cmd1);
+	free_char_tab(cmd->cmd2);
+	close(cmd->infile);
+	close(cmd->outfile);
+	close(cmd->fd[0]);
+	close(cmd->fd[1]);
+	free(cmd);
+}

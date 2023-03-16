@@ -31,7 +31,7 @@ typedef struct s_list
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
-void	ft_putchar_fd(char c, int fd);
+int		ft_putchar_fd(char c, int fd);
 
 char	**ft_split(char const *s, char c);
 
@@ -43,7 +43,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 
 char	*ft_itoa(int n);
 
-void	ft_putstr_fd(char *s, int fd);
+int 	ft_putstr_fd(char *s, int fd);
 
 void	ft_putendl_fd(char *s, int fd);
 
@@ -101,7 +101,10 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_lstsize(t_list *lst);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+
 int		ft_printf(const char *format, ...);
+
+int		ft_printf_fd(int fd, const char *format, ...);
 
 int		ft_putchar(int c);
 

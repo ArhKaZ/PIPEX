@@ -39,6 +39,7 @@ SRCS		=	ft_striteri.c	\
 				ft_putpointer.c	\
 				ft_putstr.c		\
 				ft_printf.c		\
+				ft_printf_fd.c	\
 				get_next_line.c	\
 
 BONUS		=	ft_lstadd_back.c	\

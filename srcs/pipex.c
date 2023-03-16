@@ -16,40 +16,70 @@ void	forking(t_cmd *cmd)
 {
 	int nb_fork1;
 	int nb_fork2;
-	int status1;
-	int status2;
 
 	nb_fork1 = fork();
-	nb_fork2 = fork();
-	if (nb_fork1 == 0) {
+	if (nb_fork1 == 0)
 		exec_cmd1(cmd);
-	}
-	else
-		waitpid(nb_fork1, &status1, 0);
-	if (nb_fork2 == 0) {
+	close(cmd->fd[1]);
+	nb_fork2 = fork();
+	if (nb_fork2 == 0)
 		exec_cmd2(cmd);
-	}
-	else
-		waitpid(nb_fork2, &status2, 0);
+	close(cmd->fd[0]);
+	waitpid(nb_fork1, NULL, 0);
+	waitpid(nb_fork2, NULL, 0);
 }
 
-t_cmd	*parsing(char **argv, char **envp)
+bool	open_and_pipe(char **argv, t_cmd *cmd) {
+	cmd->infile = open(argv[1], O_RDONLY, 0444);
+	if (cmd->infile == -1)
+		return (perror(argv[1]), false);
+	cmd->outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (cmd->outfile == -1)
+		return (perror(argv[4]), false);
+	pipe(cmd->fd);
+	return (true);
+}
+
+t_cmd	*commands_in_cmd(char **argv)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	cmd->cmd1 = ft_split(argv[2], ' ');
 	cmd->cmd2 = ft_split(argv[3], ' ');
-	if (cmd->cmd1[0] == NULL || cmd->cmd2[0] == NULL)
+	if (cmd->cmd1[0] == NULL)
+	{
+		ft_putstr_fd("permission denied: \n", 2);
+		free_cmd(cmd);
+		return (cmd = NULL, NULL);
+	}
+	if (cmd->cmd2[0] == NULL)
+	{
+		ft_putstr_fd("permission denied: \n", 2);
+		free_cmd(cmd);
+		return (cmd = NULL, NULL);
+	}
+	return (cmd);
+}
+t_cmd	*parsing(char **argv, char **envp)
+{
+	t_cmd	*cmd;
+
+	cmd = commands_in_cmd(argv);
+	if (cmd == NULL)
 		return (NULL);
 	cmd->cmd1[0] = get_path_command(cmd->cmd1[0], envp);
 	cmd->cmd2[0] = get_path_command(cmd->cmd2[0], envp);
-	cmd->infile = ft_strdup(argv[1]);
-	cmd->outfile = ft_strdup(argv[4]);
-	if (cmd->cmd1[0] == NULL || cmd->cmd2[0] == NULL
-		|| cmd->infile == NULL || cmd->outfile == NULL)
-		return (NULL);
-	pipe(cmd->fd);
+	if (cmd->cmd1[0] == NULL || cmd->cmd2[0] == NULL)
+	{
+		free_cmd(cmd);
+		return (cmd = NULL, NULL);
+	}
+	if (open_and_pipe(argv, cmd) == false)
+	{
+		free_cmd(cmd);
+		cmd = NULL;
+	}
 	return (cmd);
 }
 
@@ -60,5 +90,8 @@ int main(int argc, char **argv, char **envp)
 	if (argc < 2 || argc > 5)
 		return (1);
 	cmd = parsing(argv, envp);
+	if (cmd == NULL)
+		exit(EXIT_FAILURE);
 	forking(cmd);
+	free_cmd(cmd);
 }

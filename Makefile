@@ -58,7 +58,7 @@ fsanitize		:	$(MLX_A) $(LIBFT_A) $(OBJS_D) $(HEAD_D)$(HEAD) $(OBJS)
 
 bonus			:	$(NAME_B)
 
-all				: $(HEAD) $(NAME)
+all				: $(NAME)
 
 clean			:
 				$(RM) $(OBJS) $(OBJS_D) $(OBJS_D_B)

@@ -42,34 +42,50 @@ char	**get_path(char **envp)
 	}
 	return (path);
 }
+char 	*find_right_path(char *command, char **path)
+{
+	char	*full_path;
+	int 	i;
+
+	i = 0;
+	while (path[i])
+	{
+		full_path = get_full_path(path[i], command);
+		if (access(full_path, F_OK | X_OK) != -1)
+		{
+			free_char_tab(path);
+			free(command);
+			return (full_path);
+		}
+		free(full_path);
+		i++;
+	}
+	return (NULL);
+}
 
 char	*get_path_command(char *command, char **envp)
 {
 	char	**path;
-	int		i;
 	char	*full_path;
 
-	i = 0;
 	if (command == NULL)
 		return (NULL);
 	if (ft_strncmp(command, "./", 2) != 0)
 		path = get_path(envp);
 	else
 	{
-		if (access(command + 2, F_OK) != -1)
+		if (access(command + 2, F_OK | X_OK) != -1)
 			return (command);
-	}
-	while (path[i])
-	{
-		if (access(get_full_path(path[i], command), F_OK) != -1)
+		else
 		{
-			full_path = get_full_path(path[i], command);
-			free_char_tab(path);
-			free(command);
-			return (full_path);
+			perror(command);
+			return (NULL);
 		}
-		i++;
 	}
+	full_path = find_right_path(command, path);
+	if (full_path != NULL)
+		return (full_path);
+	ft_printf_fd(STDERR_FILENO, "%s: command not found", command);
 	free(command);
 	free_char_tab(path);
 	return (NULL);
