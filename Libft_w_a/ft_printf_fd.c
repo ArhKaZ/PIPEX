@@ -12,19 +12,19 @@
 
 #include "libft.h"
 
-int	test_write(void)
+int	test_write_fd(void)
 {
 	if (write(1, 0, 0) <= -1)
 		return (-1);
 	return (0);
 }
 
-int	ft_argu(int fd, char argu, va_list argus)
+int	ft_argu_fd(int fd, char argu, va_list argus)
 {
 	int	nb;
 
 	nb = 0;
-	test_write();
+	test_write_fd();
 	if (argu == 'c')
 		nb = ft_putchar_fd(va_arg(argus, int), fd);
 	else if (argu == 's')
@@ -63,7 +63,7 @@ int	ft_printf_fd(int fd, const char *str, ...)
 		{
 			if (str[i + 1] == '\0')
 				return (bo);
-			bo += ft_argu(fd, str[i + 1], args);
+			bo += ft_argu_fd(fd, str[i + 1], args);
 			i += 2;
 		}
 		else

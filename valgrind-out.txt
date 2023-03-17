@@ -1,0 +1,182 @@
+==103506== Memcheck, a memory error detector
+==103506== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==103506== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==103506== Command: ./pipex . ls\ -l sisi test.txt
+==103506== Parent PID: 99756
+==103506== 
+--103506-- 
+--103506-- Valgrind options:
+--103506--    --show-leak-kinds=all
+--103506--    --leak-check=full
+--103506--    --track-fds=yes
+--103506--    --verbose
+--103506--    --show-mismatched-frees=yes
+--103506--    --read-var-info=yes
+--103506--    --log-file=valgrind-out.txt
+--103506-- Contents of /proc/version:
+--103506--   Linux version 5.4.0-144-generic (buildd@lcy02-amd64-089) (gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)) #161-Ubuntu SMP Fri Feb 3 14:49:04 UTC 2023
+--103506-- 
+--103506-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--103506-- Page sizes: currently 4096, max supported 4096
+--103506-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--103506-- Reading syms from /nfs/homes/syluiset/Documents/PIPEX/pipex
+--103506-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--103506--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
+--103506--   .. build-id is valid
+--103506-- warning: addVar: unknown size (buf)
+--103506-- warning: addVar: unknown size (buf)
+--103506-- warning: addVar: unknown size (buf)
+--103506-- warning: addVar: unknown size (buf)
+--103506-- warning: addVar: unknown size (buf)
+--103506-- warning: addVar: unknown size (buf)
+--103506-- warning: addVar: unknown size (buf)
+--103506-- warning: addVar: unknown size (loadcmds)
+--103506-- warning: addVar: unknown size (loadcmds)
+--103506-- warning: addVar: unknown size (loadcmds)
+--103506-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--103506--    object doesn't have a symbol table
+--103506--    object doesn't have a dynamic symbol table
+--103506-- Scheduler: using generic scheduler lock implementation.
+--103506-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==103506== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-103506-by-syluiset-on-???
+==103506== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-103506-by-syluiset-on-???
+==103506== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-103506-by-syluiset-on-???
+==103506== 
+==103506== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==103506== don't want to do, unless you know exactly what you're doing,
+==103506== or are doing some strange experiment):
+==103506==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=103506 ...command...
+==103506== 
+==103506== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==103506==   /path/to/gdb ./pipex
+==103506== and then give GDB the following command
+==103506==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=103506
+==103506== --pid is optional if only one valgrind process is running
+==103506== 
+--103506-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--103506-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--103506-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--103506--    object doesn't have a symbol table
+--103506-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--103506--    object doesn't have a symbol table
+==103506== WARNING: new redirection conflicts with existing -- ignoring it
+--103506--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--103506--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+--103506-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--103506-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--103506-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--103506--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
+--103506--   .. build-id is valid
+--103506-- REDIR: 0x4902480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49027b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49010a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49017e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4903c50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x491ece0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x491e820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49025e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4902410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4902540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x491e7e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4902800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49011d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4902950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x491ff50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x491e860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x490abb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4902850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49023d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x491e930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4901ae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4902750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49026f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x4903c90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49028a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--103506-- REDIR: 0x49ea500 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
+--103506-- REDIR: 0x48fc0e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+--103506-- REDIR: 0x48fc6d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x10951A: free_cmd (free.c:32)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x109528: free_cmd (free.c:33)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x109536: free_cmd (free.c:34)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x109544: free_cmd (free.c:35)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== 
+==103506== FILE DESCRIPTORS: 3 open at exit.
+==103506== Open file descriptor 3: /nfs/homes/syluiset/Documents/PIPEX/valgrind-out.txt
+==103506==    <inherited from parent>
+==103506== 
+==103506== Open file descriptor 2: /dev/pts/0
+==103506==    <inherited from parent>
+==103506== 
+==103506== Open file descriptor 1: /dev/pts/0
+==103506==    <inherited from parent>
+==103506== 
+==103506== 
+==103506== HEAP SUMMARY:
+==103506==     in use at exit: 0 bytes in 0 blocks
+==103506==   total heap usage: 73 allocs, 73 frees, 1,191 bytes allocated
+==103506== 
+==103506== All heap blocks were freed -- no leaks are possible
+==103506== 
+==103506== Use --track-origins=yes to see where uninitialised values come from
+==103506== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==103506== 
+==103506== 1 errors in context 1 of 4:
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x109544: free_cmd (free.c:35)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== 
+==103506== 1 errors in context 2 of 4:
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x109536: free_cmd (free.c:34)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== 
+==103506== 1 errors in context 3 of 4:
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x109528: free_cmd (free.c:33)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== 
+==103506== 1 errors in context 4 of 4:
+==103506== Syscall param close(fd) contains uninitialised byte(s)
+==103506==    at 0x4970817: close (close.c:27)
+==103506==    by 0x10951A: free_cmd (free.c:32)
+==103506==    by 0x10982A: parsing (pipex.c:83)
+==103506==    by 0x1098AF: main (pipex.c:100)
+==103506== 
+==103506== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

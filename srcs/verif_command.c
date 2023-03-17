@@ -36,11 +36,21 @@ char	**get_path(char **envp)
 		if (envp[i][0] == 'P' && ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
 			path = ft_split(envp[i] + 5, ':');
-			break ;
+			return (path);
 		}
 		i++;
 	}
-	return (path);
+	return (NULL);
+}
+char 	*shell_executable(char *command)
+{
+	if (access(command + 2, F_OK | X_OK) != -1)
+		return (command);
+	else
+	{
+		perror(command);
+		return (NULL);
+	}
 }
 char 	*find_right_path(char *command, char **path)
 {
@@ -71,22 +81,23 @@ char	*get_path_command(char *command, char **envp)
 	if (command == NULL)
 		return (NULL);
 	if (ft_strncmp(command, "./", 2) != 0)
-		path = get_path(envp);
-	else
 	{
-		if (access(command + 2, F_OK | X_OK) != -1)
-			return (command);
-		else
+		path = get_path(envp);
+		if (path == NULL)
 		{
-			perror(command);
+			ft_printf_fd(STDERR_FILENO, "command not found: %s\n", command);
 			return (NULL);
 		}
+		full_path = find_right_path(command, path);
 	}
-	full_path = find_right_path(command, path);
+	else
+	{
+		full_path = shell_executable(command);
+		if (full_path == NULL)
+			return (free(command), NULL);
+	}
 	if (full_path != NULL)
 		return (full_path);
-	ft_printf_fd(STDERR_FILENO, "%s: command not found", command);
-	free(command);
-	free_char_tab(path);
-	return (NULL);
+	ft_printf_fd(STDERR_FILENO, "command not found: %s\n", command);
+	return (free(command), free_char_tab(path), NULL);
 }

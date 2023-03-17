@@ -49,23 +49,31 @@ t_cmd	*commands_in_cmd(char **argv)
 	cmd->cmd2 = ft_split(argv[3], ' ');
 	if (cmd->cmd1[0] == NULL)
 	{
-		ft_putstr_fd("permission denied: \n", 2);
+		ft_putstr_fd("permission denied: \n", STDERR_FILENO);
 		free_cmd(cmd);
 		return (cmd = NULL, NULL);
 	}
 	if (cmd->cmd2[0] == NULL)
 	{
-		ft_putstr_fd("permission denied: \n", 2);
+		ft_putstr_fd("permission denied: \n", STDERR_FILENO);
 		free_cmd(cmd);
 		return (cmd = NULL, NULL);
 	}
 	return (cmd);
 }
+
 t_cmd	*parsing(char **argv, char **envp)
 {
 	t_cmd	*cmd;
 
 	cmd = commands_in_cmd(argv);
+//	if (envp[0] == NULL)
+//	{
+//
+//		ft_printf_fd(STDERR_FILENO, "command not found: %s\n", cmd->cmd2[0]);
+//		free_cmd(cmd);
+//		return (cmd = NULL, NULL);
+//	}
 	if (cmd == NULL)
 		return (NULL);
 	cmd->cmd1[0] = get_path_command(cmd->cmd1[0], envp);
