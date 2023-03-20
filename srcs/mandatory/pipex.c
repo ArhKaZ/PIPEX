@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
-void	forking(t_cmd *cmd)
+void	forking(t_pipe *cmd)
 {
 	int nb_fork1;
 	int nb_fork2;
@@ -29,7 +29,8 @@ void	forking(t_cmd *cmd)
 	waitpid(nb_fork2, NULL, 0);
 }
 
-bool	open_and_pipe(char **argv, t_cmd *cmd) {
+bool	open_and_pipe(char **argv, t_pipe *cmd)
+{
 	cmd->infile = open(argv[1], O_RDONLY, 0444);
 	if (cmd->infile == -1)
 		return (perror(argv[1]), false);
@@ -40,11 +41,11 @@ bool	open_and_pipe(char **argv, t_cmd *cmd) {
 	return (true);
 }
 
-t_cmd	*commands_in_cmd(char **argv)
+t_pipe	*commands_in_cmd(char **argv)
 {
-	t_cmd	*cmd;
+	t_pipe	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = malloc(sizeof(t_pipe));
 	cmd->cmd1 = ft_split(argv[2], ' ');
 	cmd->cmd2 = ft_split(argv[3], ' ');
 	if (cmd->cmd1[0] == NULL)
@@ -59,21 +60,18 @@ t_cmd	*commands_in_cmd(char **argv)
 		free_cmd(cmd);
 		return (cmd = NULL, NULL);
 	}
+	cmd->infile = -1;
+	cmd->outfile = -1;
+	cmd->fd[0] = -1;
+	cmd->fd[1] = -1;
 	return (cmd);
 }
 
-t_cmd	*parsing(char **argv, char **envp)
+t_pipe	*parsing(char **argv, char **envp)
 {
-	t_cmd	*cmd;
+	t_pipe	*cmd;
 
 	cmd = commands_in_cmd(argv);
-//	if (envp[0] == NULL)
-//	{
-//
-//		ft_printf_fd(STDERR_FILENO, "command not found: %s\n", cmd->cmd2[0]);
-//		free_cmd(cmd);
-//		return (cmd = NULL, NULL);
-//	}
 	if (cmd == NULL)
 		return (NULL);
 	cmd->cmd1[0] = get_path_command(cmd->cmd1[0], envp);
@@ -93,7 +91,7 @@ t_cmd	*parsing(char **argv, char **envp)
 
 int main(int argc, char **argv, char **envp)
 {
-	t_cmd	*cmd;
+	t_pipe	*cmd;
 
 	if (argc < 2 || argc > 5)
 		return (1);

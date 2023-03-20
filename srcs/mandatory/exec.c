@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
-void	exec_cmd1(t_cmd *cmd)
+void	exec_cmd1(t_pipe *cmd)
 {
 	if (dup2(cmd->infile, STDIN_FILENO) == -1)
 		return (free_cmd(cmd), exit(EXIT_FAILURE));
@@ -26,7 +26,7 @@ void	exec_cmd1(t_cmd *cmd)
 	exit(EXIT_FAILURE);
 }
 
-void	exec_cmd2(t_cmd *cmd)
+void	exec_cmd2(t_pipe *cmd)
 {
 	if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 		return (free_cmd(cmd), exit(EXIT_FAILURE));

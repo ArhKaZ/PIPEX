@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
 void	free_char_tab(char **tab)
 {
@@ -25,13 +25,18 @@ void	free_char_tab(char **tab)
 	free(tab);
 }
 
-void	free_cmd(t_cmd *cmd)
+void	free_cmd(t_pipe *cmd)
 {
 	free_char_tab(cmd->cmd1);
 	free_char_tab(cmd->cmd2);
-	close(cmd->infile);
-	close(cmd->outfile);
-	close(cmd->fd[0]);
-	close(cmd->fd[1]);
+	if (cmd->infile > 0)
+		close(cmd->infile);
+	if (cmd->outfile > 0)
+		close(cmd->outfile);
+	if (cmd->fd[0] > 0)
+		close(cmd->fd[0]);
+	if (cmd->fd[1] > 0)
+		close(cmd->fd[1]);
 	free(cmd);
 }
+

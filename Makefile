@@ -4,9 +4,18 @@ SRCS			=	exec.c	\
 					pipex.c	\
 					verif_command.c	\
 
-SRCS_D			=	srcs/
+SRCS_B			=	exec_bonus.c			\
+					free_bonus.c			\
+					pipex_bonus.c			\
+					verif_command_bonus.c	\
+
+SRCS_D			=	srcs/mandatory/
+
+SRCS_D_B		=	srcs/bonus/
 
 OBJS			=	$(SRCS:%.c=$(OBJS_D)%.o)
+
+OBJS_B			=	$(SRCS_B:%.c=$(OBJS_D_B)%.o)
 
 OBJS_D			=	obj/
 
@@ -44,11 +53,17 @@ RM				=	rm -f -r
 $(NAME)			:	$(OBJS_D) $(OBJS) $(HEAD_D)$(HEAD)
 				$(CC) $(CCFLAG) -o $(NAME) $(OBJS) $(LIBFT_A)
 
-$(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_D)$(HEAD) $(MLX_A) $(LIBFT_A)
+$(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_D)$(HEAD) $(LIBFT_A)
+				$(CC) $(CCFLAG) -I$(HEAD_D) -I$(LIBFT_D) -c $< -o $@
+
+$(OBJS_B)		:	$(OBJS_D_B)%.o: $(SRCS_D_B)%.c $(HEAD_D)$(HEAD) $(LIBFT_A)
 				$(CC) $(CCFLAG) -I$(HEAD_D) -I$(LIBFT_D) -c $< -o $@
 
 $(OBJS_D)		:
 				mkdir -p $(OBJS_D)
+
+$(OBJS_D_B)		:
+				mkdir -p $(OBJS_D_B)
 
 $(LIBFT_A)		:	FORCE
 				make -C $(LIBFT_D)
@@ -56,9 +71,10 @@ $(LIBFT_A)		:	FORCE
 fsanitize		:	$(MLX_A) $(LIBFT_A) $(OBJS_D) $(HEAD_D)$(HEAD) $(OBJS)
 				$(CC) $(CCFLAG) $(FSA) -o $(NAME) $(OBJS) $(LIBFT_A)
 
-bonus			:	$(NAME_B)
+bonus			:	$(OBJS_D_B) $(OBJS_B) $(HEAD_D)$(HEAD)
+				$(CC) $(CCFLAG) -o $(NAME) $(OBJS_B) $(LIBFT_A)
 
-all				: $(NAME)
+all				: $(NAME) bonus
 
 clean			:
 				$(RM) $(OBJS) $(OBJS_D) $(OBJS_D_B)

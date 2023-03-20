@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../../include/pipex.h"
 
 char	*get_full_path(char *path, char *command)
 {
@@ -42,6 +42,7 @@ char	**get_path(char **envp)
 	}
 	return (NULL);
 }
+
 char 	*shell_executable(char *command)
 {
 	if (access(command + 2, F_OK | X_OK) != -1)
@@ -52,6 +53,7 @@ char 	*shell_executable(char *command)
 		return (NULL);
 	}
 }
+
 char 	*find_right_path(char *command, char **path)
 {
 	char	*full_path;
