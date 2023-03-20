@@ -19,7 +19,7 @@ void	exec_first_cmd(t_pipe *cmd)
 	close(cmd->infile);
 	if (dup2(cmd->fd[0][1], STDOUT_FILENO) == -1)
 		return (free_pipe(cmd), exit(EXIT_FAILURE));
-	close_fd(cmd);
+	//close_fd(cmd);
 	execve(cmd->cmd[0][0], cmd->cmd[0], NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
@@ -32,8 +32,8 @@ void	exec_cmd_n(t_pipe *cmd, int nb)
 	//close(cmd->fd[nb][0]);
 	if (dup2(cmd->fd[nb][1], STDOUT_FILENO) == -1)
 		return (free_pipe(cmd), exit(EXIT_FAILURE));
-	//close(cmd->fd[nb][1]);
-	close_fd(cmd);
+	close(cmd->fd[nb][1]);
+	//close_fd(cmd);
 	execve(cmd->cmd[nb][0], cmd->cmd[nb], NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
@@ -47,7 +47,7 @@ void	exec_last_cmd(t_pipe *cmd)
 	if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
 		return (free_pipe(cmd), exit(EXIT_FAILURE));
 	close(cmd->outfile);
-	close_fd(cmd);
+	//close_fd(cmd);
 	execve(cmd->cmd[cmd->nb_exec][0], cmd->cmd[cmd->nb_exec], NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
