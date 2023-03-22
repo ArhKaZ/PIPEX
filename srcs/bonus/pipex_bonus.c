@@ -15,27 +15,35 @@
 void	forking_bonus(t_pipe *pipe)
 {
 	int nb_exec;
+	int side_pipe;
 
-	nb_exec = 1;
+	side_pipe = 1;
+	nb_exec = 0;
 	pipe->fork_int = malloc(sizeof(int) * pipe->nb_exec);
-	pipe->fork_int[0] = fork();
-	if (pipe->fork_int[0] == 0)
-		exec_first_cmd(pipe);
-	close(pipe->fd[0][1]);
-	while (nb_exec < pipe->nb_exec - 1)
+	while (nb_exec < pipe->nb_exec)
 	{
 		pipe->fork_int[nb_exec] = fork();
 		if (pipe->fork_int[nb_exec] == 0)
-			exec_cmd_n(pipe, nb_exec);
+		{
+			if (nb_exec == 0)
+				exec_first_cmd(pipe);
+			else if (nb_exec == pipe->nb_exec - 1)
+			{
+				exec_last_cmd(pipe);
+				break ;
+			}
+			else
+				exec_cmd_n(pipe, nb_exec);
+			if (nb_exec < pipe->nb_exec - 1)
+				close(pipe->fd[nb_exec][side_pipe]);
+			if (side_pipe == 1)
+				side_pipe = 0;
+			else
+				side_pipe = 1;
+		}
+		else
+			waitpid(pipe->fork_int[nb_exec], NULL, 0);
 		nb_exec++;
-	}
-	pipe->fork_int[nb_exec] = fork();
-	if (pipe->fork_int[nb_exec] == 0)
-		exec_last_cmd(pipe);
-	while (nb_exec > 0)
-	{
-		waitpid(pipe->fork_int[nb_exec], NULL, 0);
-		nb_exec--;
 	}
 }
 
@@ -62,7 +70,7 @@ char	***get_all_command(int argc, char **argv)
 	return (tab);
 }
 
-bool	open_bonus(int argc, char **argv, t_pipe *cmd)
+bool	open_and_pipe_bonus(int argc, char **argv, t_pipe *cmd)
 {
 	int	nb_exec;
 
@@ -78,7 +86,6 @@ bool	open_bonus(int argc, char **argv, t_pipe *cmd)
 	{
 		cmd->fd[nb_exec] = malloc(sizeof(int) * 2);
 		pipe(cmd->fd[nb_exec]);
-		ft_printf("%d/%d\n", cmd->fd[nb_exec][0], cmd->fd[nb_exec][1]);
 		nb_exec++;
 	}
 	return (true);
@@ -92,6 +99,8 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp)
 	i = 0;
 	pipe = malloc(sizeof(t_pipe));
 	pipe->cmd = get_all_command(argc, argv);
+	if (pipe->cmd == NULL)
+		return (free(pipe), NULL);
 	while (pipe->cmd[i])
 	{
 		pipe->cmd[i][0] = get_path_command(pipe->cmd[i][0], envp);
@@ -100,7 +109,7 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp)
 		i++;
 	}
 	pipe->nb_exec = argc - 3;
-	if (open_bonus(argc, argv, pipe) == false)
+	if (open_and_pipe_bonus(argc, argv, pipe) == false)
 	{
 		free_pipe(pipe);
 		pipe = NULL;

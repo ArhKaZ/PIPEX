@@ -18,10 +18,20 @@ void	forking(t_pipe *cmd)
 	int nb_fork2;
 
 	nb_fork1 = fork();
+	if (nb_fork1 < 0)
+	{
+		free_cmd(cmd);
+		exit(EXIT_FAILURE);
+	}
 	if (nb_fork1 == 0)
 		exec_cmd1(cmd);
 	close(cmd->fd[1]);
 	nb_fork2 = fork();
+	if (nb_fork2 < 0)
+	{
+		free_cmd(cmd);
+		exit(EXIT_FAILURE);
+	}
 	if (nb_fork2 == 0)
 		exec_cmd2(cmd);
 	close(cmd->fd[0]);
