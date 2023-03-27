@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   exec_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:46:20 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/15 21:52:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:48:43 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex_bonus.h"
+#include "pipex_bonus.h"
 
 void	exec_first_cmd(t_pipe *cmd)
 {
@@ -29,26 +29,23 @@ void	exec_cmd_n(t_pipe *cmd, int nb)
 {
 	if (dup2(cmd->fd[nb][0], STDIN_FILENO) == -1)
 		return (free_pipe(cmd), exit(EXIT_FAILURE));
-	//close(cmd->fd[nb][0]);
 	if (dup2(cmd->fd[nb][1], STDOUT_FILENO) == -1)
 		return (free_pipe(cmd), exit(EXIT_FAILURE));
-	//close(cmd->fd[nb][1]);
 	close_fd(cmd);
 	execve(cmd->cmd[nb][0], cmd->cmd[nb], NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
 }
 
-void	exec_last_cmd(t_pipe *cmd)
+void	exec_last_cmd(t_pipe *cmd, int nb)
 {
-	if (dup2(cmd->fd[cmd->nb_exec - 2][0], STDIN_FILENO) == -1)
+	if (dup2(cmd->fd[nb - 1][0], STDIN_FILENO) == -1)
 		return (free_pipe(cmd), exit(EXIT_FAILURE));
-	//close(cmd->fd[cmd->nb_exec][0]);
 	if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
 		return (free_pipe(cmd), exit(EXIT_FAILURE));
 	close(cmd->outfile);
 	close_fd(cmd);
-	execve(cmd->cmd[cmd->nb_exec - 1][0], cmd->cmd[cmd->nb_exec - 1], NULL);
+	execve(cmd->cmd[nb][0], cmd->cmd[nb], NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:30:24 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/20 15:30:24 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:38:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex_bonus.h"
+#include "pipex_bonus.h"
 
 void	free_three_char_tab(char ***tab)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:30:01 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/20 13:30:01 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:59:58 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex_bonus.h"
+#include "pipex_bonus.h"
 
 void	forking_bonus(t_pipe *pipe)
 {
@@ -28,10 +28,7 @@ void	forking_bonus(t_pipe *pipe)
 			if (nb_exec == 0)
 				exec_first_cmd(pipe);
 			else if (nb_exec == pipe->nb_exec - 1)
-			{
-				exec_last_cmd(pipe);
-				break ;
-			}
+				exec_last_cmd(pipe, nb_exec);
 			else
 				exec_cmd_n(pipe, nb_exec);
 			if (nb_exec < pipe->nb_exec - 1)
@@ -59,10 +56,10 @@ char	***get_all_command(int argc, char **argv)
 	while (argv[i + 1] != NULL)
 	{
 		tab[count] = ft_split(argv[i], ' ');
-		if (tab[count] == NULL)
+		if (tab[count][0] == NULL)
 		{
 			free_three_char_tab(tab);
-			return (ft_printf_fd(STDERR_FILENO, "command not found :"), NULL);
+			return (ft_printf_fd(STDERR_FILENO, "permission denied:"), NULL);
 		}
 		i++;
 		count++;
@@ -120,9 +117,11 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp)
 int main(int argc, char **argv, char **envp)
 {
 	t_pipe *pipe;
-
+	char	*limiter;
 	if (argc < 5)
 		return (1);
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
+		limiter = ft_strdup(argv[2]);
 	pipe = parsing_bonus(argc, argv, envp);
 	if (pipe == NULL)
 		exit(EXIT_FAILURE);

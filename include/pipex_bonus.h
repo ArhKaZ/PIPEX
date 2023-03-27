@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.f>       +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:34:39 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/20 13:34:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:25:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exec_first_cmd(t_pipe *cmd);
 
 void	exec_cmd_n(t_pipe *cmd, int nb);
 
-void	exec_last_cmd(t_pipe *cmd);
+void	exec_last_cmd(t_pipe *cmd, int nb);
 
 void	free_char_tab(char **tab);
 
