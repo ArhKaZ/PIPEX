@@ -25,7 +25,7 @@
 typedef struct s_pipe
 {
 	char 	***cmd;
-	int 	**fd;
+	int 	fd[2];
 	int 	*fork_int;
 	int 	infile;
 	int 	outfile;

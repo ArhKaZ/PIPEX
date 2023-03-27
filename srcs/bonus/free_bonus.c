@@ -28,7 +28,6 @@ void	free_three_char_tab(char ***tab)
 		}
 		i++;
 	}
-	free(tab);
 }
 
 void	free_char_tab(char **tab)
@@ -44,27 +43,27 @@ void	free_char_tab(char **tab)
 	free(tab);
 }
 
-void	close_fd(t_pipe *pipe)
-{
-	int nb_fd;
-
-	nb_fd = 0;
-	while (nb_fd < pipe->nb_exec - 1)
-	{
-		close(pipe->fd[nb_fd][0]);
-		close(pipe->fd[nb_fd][1]);
-		free(pipe->fd[nb_fd]);
-		nb_fd++;
-	}
-	free(pipe->fd);
-}
+//void	close_fd(t_pipe *pipe)
+//{
+//	int nb_fd;
+//
+//	nb_fd = 0;
+//	while (nb_fd < pipe->nb_exec - 1)
+//	{
+//		close(pipe->fd[nb_fd][0]);
+//		close(pipe->fd[nb_fd][1]);
+//		free(pipe->fd[nb_fd]);
+//		nb_fd++;
+//	}
+//	free(pipe->fd);
+//}
 
 void	free_pipe(t_pipe *pipe)
 {
 	free_three_char_tab(pipe->cmd);
+	free(pipe->cmd);
 	close(pipe->infile);
 	close(pipe->outfile);
-	close_fd(pipe);
 	free(pipe->fork_int);
 	free(pipe);
 }

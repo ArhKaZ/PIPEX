@@ -3,44 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:30:01 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/27 11:59:58 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:50:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	forking_bonus(t_pipe *pipe)
+void	forking_bonus(t_pipe *pipex)
 {
-	int nb_exec;
-	int side_pipe;
+	int execution;
 
-	side_pipe = 1;
-	nb_exec = 0;
-	pipe->fork_int = malloc(sizeof(int) * pipe->nb_exec);
-	while (nb_exec < pipe->nb_exec)
+	execution = 0;
+	pipex->fork_int = malloc(sizeof(int) * pipex->nb_exec);
+	while (execution < pipex->nb_exec)
 	{
-		pipe->fork_int[nb_exec] = fork();
-		if (pipe->fork_int[nb_exec] == 0)
+		pipe(pipex->fd);
+		pipex->fork_int[execution] = fork(); // securiser
+		if (pipex->fork_int[execution] == 0)
 		{
-			if (nb_exec == 0)
-				exec_first_cmd(pipe);
-			else if (nb_exec == pipe->nb_exec - 1)
-				exec_last_cmd(pipe, nb_exec);
-			else
-				exec_cmd_n(pipe, nb_exec);
-			if (nb_exec < pipe->nb_exec - 1)
-				close(pipe->fd[nb_exec][side_pipe]);
-			if (side_pipe == 1)
-				side_pipe = 0;
-			else
-				side_pipe = 1;
+			dup2(pipex->fd[1], STDOUT_FILENO);
+			close(pipex->fd[0]);
+			close(pipex->fd[1]);
+			exec_cmd_n(pipex, execution);
 		}
 		else
-			waitpid(pipe->fork_int[nb_exec], NULL, 0);
-		nb_exec++;
+		{
+			dup2(pipex->fd[0], STDIN_FILENO);
+			close(pipex->fd[1]);
+			close(pipex->fd[0]);
+			waitpid(pipex->fork_int[execution], NULL, 0);
+		}
+		execution++;
 	}
 }
 
@@ -53,6 +49,8 @@ char	***get_all_command(int argc, char **argv)
 	count = 0;
 	i = 2;
 	tab = malloc(sizeof(char **) * argc - 3);
+	if (!tab)
+		return (NULL);
 	while (argv[i + 1] != NULL)
 	{
 		tab[count] = ft_split(argv[i], ' ');
@@ -69,22 +67,12 @@ char	***get_all_command(int argc, char **argv)
 
 bool	open_and_pipe_bonus(int argc, char **argv, t_pipe *cmd)
 {
-	int	nb_exec;
-
-	nb_exec = 0;
 	cmd->infile = open(argv[1], O_RDONLY, 0444);
 	if (cmd->infile == -1)
 		return (perror(argv[1]), false);
 	cmd->outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (cmd->outfile == -1)
 		return (perror(argv[argc - 1]), false);
-	cmd->fd = malloc(sizeof(int *) * cmd->nb_exec - 1);
-	while (nb_exec < cmd->nb_exec - 1)
-	{
-		cmd->fd[nb_exec] = malloc(sizeof(int) * 2);
-		pipe(cmd->fd[nb_exec]);
-		nb_exec++;
-	}
 	return (true);
 }
 
@@ -117,11 +105,12 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp)
 int main(int argc, char **argv, char **envp)
 {
 	t_pipe *pipe;
-	char	*limiter;
+	//char	*limiter;
+
 	if (argc < 5)
 		return (1);
-	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
-		limiter = ft_strdup(argv[2]);
+	//if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
+		//limiter = ft_strdup(argv[2]);
 	pipe = parsing_bonus(argc, argv, envp);
 	if (pipe == NULL)
 		exit(EXIT_FAILURE);

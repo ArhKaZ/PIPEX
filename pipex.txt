@@ -1,10 +1,14 @@
-Libft_w_a
-Makefile
-include
-obj
-obj_b
-pipex
-pipex.txt
-srcs
-test.txt
-valgrind-out.txt
+     1	total 164$
+     2	drwxr-xr-x 3 syluiset 2022_lyon   4096 Mar 27 16:41 Libft_w_a$
+     3	-rw-r--r-- 1 syluiset 2022_lyon   2116 Mar 20 17:44 Makefile$
+     4	-rw-r--r-- 1 syluiset 2022_lyon      2 Mar 27 13:36 dest.txt$
+     5	drwxr-xr-x 2 syluiset 2022_lyon   4096 Mar 27 16:20 include$
+     6	drwxr-xr-x 2 syluiset 2022_lyon   4096 Mar 27 16:41 obj$
+     7	drwxr-xr-x 2 syluiset 2022_lyon   4096 Mar 27 17:00 obj_b$
+     8	-rw-r--r-- 1 syluiset 2022_lyon      1 Mar 27 16:55 outfile.txt$
+     9	-rwxr-xr-x 1 syluiset 2022_lyon 122136 Mar 27 17:00 pipex$
+    10	-rwxr-xr-x 1 syluiset 2022_lyon      0 Mar 27 17:00 pipex.txt$
+    11	-rw-r--r-- 1 syluiset 2022_lyon      0 Mar 27 13:36 sisi.txt$
+    12	drwxr-xr-x 4 syluiset 2022_lyon   4096 Mar 20 17:43 srcs$
+    13	-rwxr-xr-x 1 syluiset 2022_lyon      0 Mar 27 13:36 test.txt$
+    14	-rw-r--r-- 1 syluiset 2022_lyon  10979 Mar 21 15:58 valgrind-out.txt$
