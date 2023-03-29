@@ -46,5 +46,5 @@ void	exec_last_cmd(t_pipe *cmd, int nb);
 
 void	free_char_tab(char **tab);
 
-void	close_fd(t_pipe *pipe);
+void	here_doc(char *limiter);
 #endif

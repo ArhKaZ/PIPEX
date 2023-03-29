@@ -109,8 +109,8 @@ int main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 		return (1);
-	//if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
-		//limiter = ft_strdup(argv[2]);
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
+		here_doc(argv[2]);
 	pipe = parsing_bonus(argc, argv, envp);
 	if (pipe == NULL)
 		exit(EXIT_FAILURE);
