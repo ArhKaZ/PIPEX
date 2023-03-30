@@ -1,0 +1,14 @@
+Libft_w_a
+Makefile
+dest.txt
+heredoc.txt
+include
+moncul.txt
+obj_b
+outfile.txt
+pipex
+pipex.txt
+sisi.txt
+srcs
+test.txt
+valgrind-out.txt

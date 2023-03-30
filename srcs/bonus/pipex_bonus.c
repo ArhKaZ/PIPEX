@@ -21,7 +21,9 @@ void	forking_bonus(t_pipe *pipex)
 	while (execution < pipex->nb_exec)
 	{
 		pipe(pipex->fd);
-		pipex->fork_int[execution] = fork(); // securiser
+		pipex->fork_int[execution] = fork();
+		if (pipex->fork_int[execution] < 0)
+			ft_printf_fd(STDERR_FILENO, "Error");
 		if (pipex->fork_int[execution] == 0)
 		{
 			dup2(pipex->fd[1], STDOUT_FILENO);
@@ -40,15 +42,18 @@ void	forking_bonus(t_pipe *pipex)
 	}
 }
 
-char	***get_all_command(int argc, char **argv)
+char	***get_all_command(char **argv, bool is_hd, int nb_ex)
 {
-	char 	***tab;
-	int		i;
-	int 	count;
+	char ***tab;
+	int i;
+	int count;
 
 	count = 0;
-	i = 2;
-	tab = malloc(sizeof(char **) * argc - 3);
+	if (is_hd == false)
+		i = 2;
+	else
+		i = 3;
+	tab = malloc(sizeof(char **) * nb_ex);
 	if (!tab)
 		return (NULL);
 	while (argv[i + 1] != NULL)
@@ -65,9 +70,12 @@ char	***get_all_command(int argc, char **argv)
 	return (tab);
 }
 
-bool	open_and_pipe_bonus(int argc, char **argv, t_pipe *cmd)
+bool	open_and_pipe_bonus(int argc, char **argv, t_pipe *cmd, bool is_hd)
 {
-	cmd->infile = open(argv[1], O_RDONLY, 0444);
+	if (is_hd == false)
+		cmd->infile = open(argv[1], O_RDONLY, 0444);
+	else
+		cmd->infile = STDIN_FILENO;
 	if (cmd->infile == -1)
 		return (perror(argv[1]), false);
 	cmd->outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -76,14 +84,18 @@ bool	open_and_pipe_bonus(int argc, char **argv, t_pipe *cmd)
 	return (true);
 }
 
-t_pipe	*parsing_bonus(int argc, char **argv, char **envp)
+t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 {
 	t_pipe	*pipe;
 	int		i;
 
 	i = 0;
 	pipe = malloc(sizeof(t_pipe));
-	pipe->cmd = get_all_command(argc, argv);
+	if (is_hd == false)
+		pipe->nb_exec = argc - 3;
+	else
+		pipe->nb_exec = argc - 4;
+	pipe->cmd = get_all_command(argv, is_hd, pipe->nb_exec);
 	if (pipe->cmd == NULL)
 		return (free(pipe), NULL);
 	while (pipe->cmd[i])
@@ -93,8 +105,7 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp)
 			return (free_pipe(pipe), pipe = NULL, NULL);
 		i++;
 	}
-	pipe->nb_exec = argc - 3;
-	if (open_and_pipe_bonus(argc, argv, pipe) == false)
+	if (open_and_pipe_bonus(argc, argv, pipe, is_hd) == false)
 	{
 		free_pipe(pipe);
 		pipe = NULL;
@@ -104,16 +115,20 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp)
 
 int main(int argc, char **argv, char **envp)
 {
-	t_pipe *pipe;
-	//char	*limiter;
+	t_pipe	*pipex;
+	int 	fd[2];
+	bool	is_hd;
 
+	is_hd = false;
 	if (argc < 5)
 		return (1);
-	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
-		here_doc(argv[2]);
-	pipe = parsing_bonus(argc, argv, envp);
-	if (pipe == NULL)
-		exit(EXIT_FAILURE);
-	forking_bonus(pipe);
-	free_pipe(pipe);
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
+	{
+		pipe(fd);
+		here_doc(argv[2], fd);
+		is_hd = true;
+	}
+	pipex = parsing_bonus(argc, argv, envp, is_hd);
+	forking_bonus(pipex);
+	free_pipe(pipex);
 }

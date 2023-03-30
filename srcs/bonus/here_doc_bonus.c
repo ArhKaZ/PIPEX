@@ -12,18 +12,49 @@
 
 #include "../../include/pipex_bonus.h"
 
-void	here_doc(char *limiter)
+char	*get_heredoc(char *heredoc, char *line)
+{
+	char	*temp;
+
+	if (line)
+	{
+		if (heredoc != NULL)
+		{
+			temp = ft_strdup(heredoc);
+			free(heredoc);
+			heredoc = ft_strjoin(temp, line);
+			free(temp);
+		}
+		else
+			heredoc = ft_strdup(line);
+		free(line);
+	}
+	return (heredoc);
+}
+
+void	here_doc(char *limiter, int fd[2])
 {
 	char	*line;
 	char	*here_doc;
-	char	*temp;
 
-	line = get_next_line(STDIN_FILENO);
+	here_doc = NULL;
 	while (1)
 	{
-		temp = ft_strdup(line);
-		free(line);
+		ft_printf_fd(STDOUT_FILENO, "pipe heredoc> ");
 		line = get_next_line(STDIN_FILENO);
-		if (ft_strncmp())
+		if (line && ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+			break ;
+		else
+			here_doc = get_heredoc(here_doc, line);
 	}
+	free(line);
+	if (write(fd[1], NULL, 0) < 0)
+	{
+		ft_printf_fd(2, "can't write");
+		return ;
+	}
+	write(fd[1], here_doc, ft_strlen(here_doc));
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+	close(fd[0]);
 }

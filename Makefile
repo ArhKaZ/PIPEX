@@ -8,6 +8,7 @@ SRCS_B			=	exec_bonus.c			\
 					free_bonus.c			\
 					pipex_bonus.c			\
 					verif_command_bonus.c	\
+					here_doc_bonus.c		\
 
 SRCS_D			=	srcs/mandatory/
 
@@ -72,7 +73,7 @@ fsanitize		:	$(MLX_A) $(LIBFT_A) $(OBJS_D) $(HEAD_D)$(HEAD) $(OBJS)
 				$(CC) $(CCFLAG) $(FSA) -o $(NAME) $(OBJS) $(LIBFT_A)
 
 bonus			:	$(OBJS_D_B) $(OBJS_B) $(HEAD_D)$(HEAD)
-				$(CC) $(CCFLAG) -o $(NAME) $(OBJS_B) $(LIBFT_A)
+				$(CC) $(CCFLAG)  -o $(NAME) $(OBJS_B) $(LIBFT_A)
 
 all				: $(NAME) bonus
 
