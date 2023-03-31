@@ -1,187 +1,190 @@
-==912413== Memcheck, a memory error detector
-==912413== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==912413== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
-==912413== Command: ./pipex . ls cat cat heredoc.txt
-==912413== Parent PID: 896016
-==912413== 
---912413-- 
---912413-- Valgrind options:
---912413--    --show-leak-kinds=all
---912413--    --leak-check=full
---912413--    --track-fds=yes
---912413--    --verbose
---912413--    --show-mismatched-frees=yes
---912413--    --read-var-info=yes
---912413--    --log-file=valgrind-out.txt
---912413-- Contents of /proc/version:
---912413--   Linux version 5.4.0-139-generic (buildd@lcy02-amd64-112) (gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)) #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
---912413-- 
---912413-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
---912413-- Page sizes: currently 4096, max supported 4096
---912413-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
---912413-- Reading syms from /nfs/homes/syluiset/Documents/PIPEX/pipex
---912413-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
---912413--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
---912413--   .. build-id is valid
---912413-- warning: addVar: unknown size (buf)
---912413-- warning: addVar: unknown size (buf)
---912413-- warning: addVar: unknown size (buf)
---912413-- warning: addVar: unknown size (buf)
---912413-- warning: addVar: unknown size (buf)
---912413-- warning: addVar: unknown size (buf)
---912413-- warning: addVar: unknown size (buf)
---912413-- warning: addVar: unknown size (loadcmds)
---912413-- warning: addVar: unknown size (loadcmds)
---912413-- warning: addVar: unknown size (loadcmds)
---912413-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
---912413--    object doesn't have a symbol table
---912413--    object doesn't have a dynamic symbol table
---912413-- Scheduler: using generic scheduler lock implementation.
---912413-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
-==912413== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-912413-by-syluiset-on-???
-==912413== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-912413-by-syluiset-on-???
-==912413== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-912413-by-syluiset-on-???
-==912413== 
-==912413== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==912413== don't want to do, unless you know exactly what you're doing,
-==912413== or are doing some strange experiment):
-==912413==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=912413 ...command...
-==912413== 
-==912413== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==912413==   /path/to/gdb ./pipex
-==912413== and then give GDB the following command
-==912413==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=912413
-==912413== --pid is optional if only one valgrind process is running
-==912413== 
---912413-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
---912413-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
---912413-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
---912413--    object doesn't have a symbol table
---912413-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
---912413--    object doesn't have a symbol table
-==912413== WARNING: new redirection conflicts with existing -- ignoring it
---912413--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
---912413--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
---912413-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
---912413-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
---912413-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
---912413--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
---912413--   .. build-id is valid
---912413-- REDIR: 0x4902480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49027b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49010a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49017e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4903c50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x491ece0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x491e820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49025e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4902410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4902540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x491e7e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4902800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49011d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4902950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x491ff50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x491e860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x490abb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4902850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49023d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x491e930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4901ae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4902750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49026f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x4903c90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49028a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
---912413-- REDIR: 0x49ea500 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
---912413-- REDIR: 0x48fc0e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
---912413-- REDIR: 0x48fc6d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
-==912413== Invalid read of size 8
-==912413==    at 0x109A16: parsing_bonus (pipex_bonus.c:101)
-==912413==    by 0x109B2C: main (pipex_bonus.c:131)
-==912413==  Address 0x4a570c8 is 0 bytes after a block of size 24 alloc'd
-==912413==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==912413==    by 0x10971B: get_all_command (pipex_bonus.c:56)
-==912413==    by 0x109953: parsing_bonus (pipex_bonus.c:98)
-==912413==    by 0x109B2C: main (pipex_bonus.c:131)
-==912413== 
-==912413== Invalid read of size 8
-==912413==    at 0x10946E: free_three_char_tab (free_bonus.c:21)
-==912413==    by 0x109503: free_pipe (free_bonus.c:48)
-==912413==    by 0x109B48: main (pipex_bonus.c:133)
-==912413==  Address 0x4a570c8 is 0 bytes after a block of size 24 alloc'd
-==912413==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==912413==    by 0x10971B: get_all_command (pipex_bonus.c:56)
-==912413==    by 0x109953: parsing_bonus (pipex_bonus.c:98)
-==912413==    by 0x109B2C: main (pipex_bonus.c:131)
-==912413== 
-==912413== 
-==912413== FILE DESCRIPTORS: 4 open at exit.
-==912413== Open file descriptor 3: /nfs/homes/syluiset/Documents/PIPEX/valgrind-out.txt
-==912413==    <inherited from parent>
-==912413== 
-==912413== Open file descriptor 2: /dev/pts/0
-==912413==    <inherited from parent>
-==912413== 
-==912413== Open file descriptor 1: /dev/pts/0
-==912413==    <inherited from parent>
-==912413== 
-==912413== Open file descriptor 0:
-==912413==    at 0x49708CB: dup2 (syscall-template.S:78)
-==912413==    by 0x10966E: forking_bonus (pipex_bonus.c:36)
-==912413==    by 0x109B3C: main (pipex_bonus.c:132)
-==912413== 
-==912413== 
-==912413== HEAP SUMMARY:
-==912413==     in use at exit: 48 bytes in 3 blocks
-==912413==   total heap usage: 87 allocs, 84 frees, 1,519 bytes allocated
-==912413== 
-==912413== Searching for pointers to 3 not-freed blocks
-==912413== Checked 70,472 bytes
-==912413== 
-==912413== 48 bytes in 3 blocks are definitely lost in loss record 1 of 1
-==912413==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==912413==    by 0x10A3F5: ft_split (in /nfs/homes/syluiset/Documents/PIPEX/pipex)
-==912413==    by 0x10976E: get_all_command (pipex_bonus.c:61)
-==912413==    by 0x109953: parsing_bonus (pipex_bonus.c:98)
-==912413==    by 0x109B2C: main (pipex_bonus.c:131)
-==912413== 
-==912413== LEAK SUMMARY:
-==912413==    definitely lost: 48 bytes in 3 blocks
-==912413==    indirectly lost: 0 bytes in 0 blocks
-==912413==      possibly lost: 0 bytes in 0 blocks
-==912413==    still reachable: 0 bytes in 0 blocks
-==912413==         suppressed: 0 bytes in 0 blocks
-==912413== 
-==912413== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
-==912413== 
-==912413== 1 errors in context 1 of 3:
-==912413== Invalid read of size 8
-==912413==    at 0x10946E: free_three_char_tab (free_bonus.c:21)
-==912413==    by 0x109503: free_pipe (free_bonus.c:48)
-==912413==    by 0x109B48: main (pipex_bonus.c:133)
-==912413==  Address 0x4a570c8 is 0 bytes after a block of size 24 alloc'd
-==912413==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==912413==    by 0x10971B: get_all_command (pipex_bonus.c:56)
-==912413==    by 0x109953: parsing_bonus (pipex_bonus.c:98)
-==912413==    by 0x109B2C: main (pipex_bonus.c:131)
-==912413== 
-==912413== 
-==912413== 1 errors in context 2 of 3:
-==912413== Invalid read of size 8
-==912413==    at 0x109A16: parsing_bonus (pipex_bonus.c:101)
-==912413==    by 0x109B2C: main (pipex_bonus.c:131)
-==912413==  Address 0x4a570c8 is 0 bytes after a block of size 24 alloc'd
-==912413==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==912413==    by 0x10971B: get_all_command (pipex_bonus.c:56)
-==912413==    by 0x109953: parsing_bonus (pipex_bonus.c:98)
-==912413==    by 0x109B2C: main (pipex_bonus.c:131)
-==912413== 
-==912413== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==1160730== Memcheck, a memory error detector
+==1160730== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1160730== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==1160730== Command: ./pipex dest.txt cat cat grep\ 4 cat cat heredoc.txt
+==1160730== Parent PID: 1148174
+==1160730== 
+--1160730-- 
+--1160730-- Valgrind options:
+--1160730--    --show-leak-kinds=all
+--1160730--    --leak-check=full
+--1160730--    --track-fds=yes
+--1160730--    --verbose
+--1160730--    --show-mismatched-frees=yes
+--1160730--    --read-var-info=yes
+--1160730--    --log-file=valgrind-out.txt
+--1160730-- Contents of /proc/version:
+--1160730--   Linux version 5.4.0-139-generic (buildd@lcy02-amd64-112) (gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)) #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+--1160730-- 
+--1160730-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--1160730-- Page sizes: currently 4096, max supported 4096
+--1160730-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--1160730-- Reading syms from /nfs/homes/syluiset/Documents/PIPEX/pipex
+--1160730-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--1160730--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
+--1160730--   .. build-id is valid
+--1160730-- warning: addVar: unknown size (buf)
+--1160730-- warning: addVar: unknown size (buf)
+--1160730-- warning: addVar: unknown size (buf)
+--1160730-- warning: addVar: unknown size (buf)
+--1160730-- warning: addVar: unknown size (buf)
+--1160730-- warning: addVar: unknown size (buf)
+--1160730-- warning: addVar: unknown size (buf)
+--1160730-- warning: addVar: unknown size (loadcmds)
+--1160730-- warning: addVar: unknown size (loadcmds)
+--1160730-- warning: addVar: unknown size (loadcmds)
+--1160730-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--1160730--    object doesn't have a symbol table
+--1160730--    object doesn't have a dynamic symbol table
+--1160730-- Scheduler: using generic scheduler lock implementation.
+--1160730-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==1160730== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-1160730-by-syluiset-on-???
+==1160730== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-1160730-by-syluiset-on-???
+==1160730== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-1160730-by-syluiset-on-???
+==1160730== 
+==1160730== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==1160730== don't want to do, unless you know exactly what you're doing,
+==1160730== or are doing some strange experiment):
+==1160730==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=1160730 ...command...
+==1160730== 
+==1160730== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==1160730==   /path/to/gdb ./pipex
+==1160730== and then give GDB the following command
+==1160730==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=1160730
+==1160730== --pid is optional if only one valgrind process is running
+==1160730== 
+--1160730-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--1160730-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--1160730-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--1160730--    object doesn't have a symbol table
+--1160730-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--1160730--    object doesn't have a symbol table
+==1160730== WARNING: new redirection conflicts with existing -- ignoring it
+--1160730--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--1160730--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+--1160730-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--1160730-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--1160730-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--1160730--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
+--1160730--   .. build-id is valid
+--1160730-- REDIR: 0x4902480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49027b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49010a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49017e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4903c50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x491ece0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x491e820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49025e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4902410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4902540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x491e7e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4902800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49011d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4902950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x491ff50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x491e860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x490abb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4902850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49023d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x491e930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4901ae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4902750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49026f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x4903c90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49028a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--1160730-- REDIR: 0x49ea500 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
+--1160730-- REDIR: 0x48fc0e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+==1160730== Invalid write of size 8
+==1160730==    at 0x109823: get_all_command (pipex_bonus.c:73)
+==1160730==    by 0x109997: parsing_bonus (pipex_bonus.c:102)
+==1160730==    by 0x109B9B: main (pipex_bonus.c:148)
+==1160730==  Address 0x4a570d8 is 40 bytes inside a block of size 41 alloc'd
+==1160730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1160730==    by 0x109744: get_all_command (pipex_bonus.c:59)
+==1160730==    by 0x109997: parsing_bonus (pipex_bonus.c:102)
+==1160730==    by 0x109B9B: main (pipex_bonus.c:148)
+==1160730== 
+--1160730-- REDIR: 0x48fc6d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
+==1160730== Conditional jump or move depends on uninitialised value(s)
+==1160730==    at 0x109A60: parsing_bonus (pipex_bonus.c:105)
+==1160730==    by 0x109B9B: main (pipex_bonus.c:148)
+==1160730== 
+==1160730== Conditional jump or move depends on uninitialised value(s)
+==1160730==    at 0x10948A: free_three_char_tab (free_bonus.c:21)
+==1160730==    by 0x109519: free_pipe (free_bonus.c:48)
+==1160730==    by 0x109BB7: main (pipex_bonus.c:150)
+==1160730== 
+==1160730== 
+==1160730== FILE DESCRIPTORS: 4 open at exit.
+==1160730== Open file descriptor 3: /nfs/homes/syluiset/Documents/PIPEX/valgrind-out.txt
+==1160730==    <inherited from parent>
+==1160730== 
+==1160730== Open file descriptor 2: /dev/pts/0
+==1160730==    <inherited from parent>
+==1160730== 
+==1160730== Open file descriptor 1: /dev/pts/0
+==1160730==    <inherited from parent>
+==1160730== 
+==1160730== Open file descriptor 0:
+==1160730==    at 0x49708CB: dup2 (syscall-template.S:78)
+==1160730==    by 0x109695: forking_bonus (pipex_bonus.c:39)
+==1160730==    by 0x109BAB: main (pipex_bonus.c:149)
+==1160730== 
+==1160730== 
+==1160730== HEAP SUMMARY:
+==1160730==     in use at exit: 88 bytes in 5 blocks
+==1160730==   total heap usage: 144 allocs, 139 frees, 2,532 bytes allocated
+==1160730== 
+==1160730== Searching for pointers to 5 not-freed blocks
+==1160730== Checked 70,504 bytes
+==1160730== 
+==1160730== 88 bytes in 5 blocks are definitely lost in loss record 1 of 1
+==1160730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1160730==    by 0x10A441: ft_split (in /nfs/homes/syluiset/Documents/PIPEX/pipex)
+==1160730==    by 0x109797: get_all_command (pipex_bonus.c:64)
+==1160730==    by 0x109997: parsing_bonus (pipex_bonus.c:102)
+==1160730==    by 0x109B9B: main (pipex_bonus.c:148)
+==1160730== 
+==1160730== LEAK SUMMARY:
+==1160730==    definitely lost: 88 bytes in 5 blocks
+==1160730==    indirectly lost: 0 bytes in 0 blocks
+==1160730==      possibly lost: 0 bytes in 0 blocks
+==1160730==    still reachable: 0 bytes in 0 blocks
+==1160730==         suppressed: 0 bytes in 0 blocks
+==1160730== 
+==1160730== Use --track-origins=yes to see where uninitialised values come from
+==1160730== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
+==1160730== 
+==1160730== 1 errors in context 1 of 4:
+==1160730== Conditional jump or move depends on uninitialised value(s)
+==1160730==    at 0x10948A: free_three_char_tab (free_bonus.c:21)
+==1160730==    by 0x109519: free_pipe (free_bonus.c:48)
+==1160730==    by 0x109BB7: main (pipex_bonus.c:150)
+==1160730== 
+==1160730== 
+==1160730== 1 errors in context 2 of 4:
+==1160730== Conditional jump or move depends on uninitialised value(s)
+==1160730==    at 0x109A60: parsing_bonus (pipex_bonus.c:105)
+==1160730==    by 0x109B9B: main (pipex_bonus.c:148)
+==1160730== 
+==1160730== 
+==1160730== 1 errors in context 3 of 4:
+==1160730== Invalid write of size 8
+==1160730==    at 0x109823: get_all_command (pipex_bonus.c:73)
+==1160730==    by 0x109997: parsing_bonus (pipex_bonus.c:102)
+==1160730==    by 0x109B9B: main (pipex_bonus.c:148)
+==1160730==  Address 0x4a570d8 is 40 bytes inside a block of size 41 alloc'd
+==1160730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1160730==    by 0x109744: get_all_command (pipex_bonus.c:59)
+==1160730==    by 0x109997: parsing_bonus (pipex_bonus.c:102)
+==1160730==    by 0x109B9B: main (pipex_bonus.c:148)
+==1160730== 
+==1160730== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

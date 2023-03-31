@@ -54,7 +54,26 @@ void	here_doc(char *limiter, int fd[2])
 		return ;
 	}
 	write(fd[1], here_doc, ft_strlen(here_doc));
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
-	close(fd[0]);
+}
+
+int	launch_here_doc(char *limiter)
+{
+	int	fd[2];
+	int	forking;
+
+	pipe(fd);
+	forking = fork();
+	if (forking == 0)
+	{
+		here_doc(limiter, fd);
+		close(fd[1]);
+		close(fd[0]);
+	}
+	else
+	{
+		waitpid(forking, NULL, 0);
+		close(fd[1]);
+		//dup2(fd[0], STDIN_FILENO);
+	}
+	return (fd[0]);
 }

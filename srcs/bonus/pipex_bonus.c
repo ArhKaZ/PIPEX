@@ -23,7 +23,10 @@ void	forking_bonus(t_pipe *pipex)
 		pipe(pipex->fd);
 		pipex->fork_int[execution] = fork();
 		if (pipex->fork_int[execution] < 0)
+		{
 			ft_printf_fd(STDERR_FILENO, "Error");
+			return (free_pipe(pipex));
+		}
 		if (pipex->fork_int[execution] == 0)
 		{
 			dup2(pipex->fd[1], STDOUT_FILENO);
@@ -53,7 +56,7 @@ char	***get_all_command(char **argv, bool is_hd, int nb_ex)
 		i = 2;
 	else
 		i = 3;
-	tab = malloc(sizeof(char **) * nb_ex);
+	tab = malloc(sizeof(char **) * nb_ex + 1);
 	if (!tab)
 		return (NULL);
 	while (argv[i + 1] != NULL)
@@ -67,6 +70,7 @@ char	***get_all_command(char **argv, bool is_hd, int nb_ex)
 		i++;
 		count++;
 	}
+	tab[count] = NULL;
 	return (tab);
 }
 
@@ -74,8 +78,8 @@ bool	open_and_pipe_bonus(int argc, char **argv, t_pipe *cmd, bool is_hd)
 {
 	if (is_hd == false)
 		cmd->infile = open(argv[1], O_RDONLY, 0444);
-	else
-		cmd->infile = STDIN_FILENO;
+//	else
+//		cmd->infile = fd;
 	if (cmd->infile == -1)
 		return (perror(argv[1]), false);
 	cmd->outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -94,11 +98,11 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 	if (is_hd == false)
 		pipe->nb_exec = argc - 3;
 	else
-		pipe->nb_exec = argc - 4;
+		pipe->nb_exec = argc - 5;
 	pipe->cmd = get_all_command(argv, is_hd, pipe->nb_exec);
 	if (pipe->cmd == NULL)
 		return (free(pipe), NULL);
-	while (pipe->cmd[i])
+	while (pipe->cmd[i] != NULL)
 	{
 		pipe->cmd[i][0] = get_path_command(pipe->cmd[i][0], envp);
 		if (pipe->cmd[i][0] == NULL)
@@ -116,16 +120,16 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 int main(int argc, char **argv, char **envp)
 {
 	t_pipe	*pipex;
-	int 	fd[2];
 	bool	is_hd;
+	int 	fd0;
 
+	fd0 = -1;
 	is_hd = false;
 	if (argc < 5)
 		return (1);
-	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
 	{
-		pipe(fd);
-		here_doc(argv[2], fd);
+		fd0 = launch_here_doc(argv[2]);
 		is_hd = true;
 	}
 	pipex = parsing_bonus(argc, argv, envp, is_hd);

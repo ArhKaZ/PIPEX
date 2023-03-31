@@ -23,6 +23,6 @@ void	exec_cmd_n(t_pipe *cmd, int nb)
 		close(cmd->outfile);
 	}
 	execve(cmd->cmd[nb][0], cmd->cmd[nb], NULL);
-	perror("execve");
+	perror(cmd->cmd[nb][0]);
 	exit(EXIT_FAILURE);
 }
