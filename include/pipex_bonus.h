@@ -26,10 +26,12 @@ typedef struct s_pipe
 {
 	char 	***cmd;
 	int 	fd[2];
-	int 	*fork_int;
 	int 	infile;
+	char	*outfile_path;
 	int 	outfile;
+	char 	*limiter;
 	int 	nb_exec;
+	bool	is_hd;
 }				t_pipe;
 
 void	free_pipe(t_pipe *pipe);
@@ -46,7 +48,9 @@ void	exec_last_cmd(t_pipe *cmd, int nb);
 
 void	free_char_tab(char **tab);
 
-void	here_doc(char *limiter, int fd[2]);
+void	here_doc(char *limiter);
 
-int	launch_here_doc(char *limiter);
+void	launch_here_doc(t_pipe *pipex);
+
+void	here_doc_exec(t_pipe *pipex);
 #endif

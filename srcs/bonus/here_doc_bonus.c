@@ -32,7 +32,7 @@ char	*get_heredoc(char *heredoc, char *line)
 	return (heredoc);
 }
 
-void	here_doc(char *limiter, int fd[2])
+void	here_doc(char *limiter)
 {
 	char	*line;
 	char	*here_doc;
@@ -40,40 +40,31 @@ void	here_doc(char *limiter, int fd[2])
 	here_doc = NULL;
 	while (1)
 	{
-		ft_printf_fd(STDOUT_FILENO, "pipe heredoc> ");
+		ft_printf_fd(STDOUT_FILENO, "> ");
 		line = get_next_line(STDIN_FILENO);
-		if (line && ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		dprintf(2, "yo");
+		if (line && ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) {
+			//free(line); TODO: A VOIR
 			break ;
+		}
 		else
 			here_doc = get_heredoc(here_doc, line);
 	}
-	free(line);
-	if (write(fd[1], NULL, 0) < 0)
-	{
-		ft_printf_fd(2, "can't write");
-		return ;
-	}
-	write(fd[1], here_doc, ft_strlen(here_doc));
+	write(STDOUT_FILENO, here_doc, ft_strlen(here_doc));
+	dprintf(2,"i m here\n");
 }
 
-int	launch_here_doc(char *limiter)
+void	here_doc_exec(t_pipe *pipex)
 {
-	int	fd[2];
-	int	forking;
+	int fd[2];
 
 	pipe(fd);
-	forking = fork();
-	if (forking == 0)
-	{
-		here_doc(limiter, fd);
-		close(fd[1]);
-		close(fd[0]);
-	}
-	else
-	{
-		waitpid(forking, NULL, 0);
-		close(fd[1]);
-		//dup2(fd[0], STDIN_FILENO);
-	}
-	return (fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+	dprintf(2, "here\n");
+	here_doc(pipex->limiter);
+	printf("there\n");
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 }
+

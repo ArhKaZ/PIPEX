@@ -45,12 +45,9 @@ void	free_char_tab(char **tab)
 
 void	free_pipe(t_pipe *pipe)
 {
-	free_three_char_tab(pipe->cmd);
-	free(pipe->cmd);
-	if (pipe->infile > 0)
-		close(pipe->infile);
-	if (pipe->outfile > 0)
-		close(pipe->outfile);
-	free(pipe->fork_int);
-	free(pipe);
+	//free_three_char_tab(pipe->cmd);
+	//free(pipe->outfile_path);
+	//free(pipe->cmd);
+	//free(pipe);
+	(void)pipe;
 }

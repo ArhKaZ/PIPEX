@@ -14,15 +14,27 @@
 
 void	exec_cmd_n(t_pipe *cmd, int nb)
 {
-	if (nb == 0 && cmd->infile != 0)
-		dup2(cmd->infile, STDIN_FILENO);
-	close(cmd->infile);
+	if (cmd->is_hd == false)
+	{
+		if (nb == 0 && cmd->infile > 0)
+			dup2(cmd->infile, STDIN_FILENO);
+		close(cmd->infile);
+	}
 	if (nb == cmd->nb_exec - 1)
 	{
 		dup2(cmd->outfile, STDOUT_FILENO);
 		close(cmd->outfile);
 	}
-	execve(cmd->cmd[nb][0], cmd->cmd[nb], NULL);
-	perror(cmd->cmd[nb][0]);
-	exit(EXIT_FAILURE);
+	if (cmd->is_hd == false)
+	{
+		execve(cmd->cmd[nb][0], cmd->cmd[nb], NULL);
+		perror(cmd->cmd[nb][0]);
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		execve(cmd->cmd[nb - 1][0], cmd->cmd[nb - 1], NULL);
+		perror(cmd->cmd[nb - 1][0]);
+		exit(EXIT_FAILURE);
+	}
 }
