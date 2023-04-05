@@ -51,14 +51,14 @@ void	forking_bonus(t_pipe *pipex, char **envp)
 	int execution;
 
 	execution = 0;
-	while (execution <= pipex->nb_exec)
+	while (execution < pipex->nb_exec)
 	{
 		dprintf(2, "%d\n", execution);
 		if (execution != pipex->nb_exec - 1)
 			exec_pipex(pipex, pipex->cmd[execution], envp, 0);
 		else
 		{
-			pipex->outfile = open(pipex->outfile_path,  O_WRONLY | O_CREAT | O_TRUNC, 0777);
+			pipex->outfile = open(pipex->outfile_path,  O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			exec_pipex(pipex, pipex->cmd[execution], envp, 1);
 		}
 		execution++;
@@ -78,10 +78,10 @@ char	***get_all_command(char **argv, bool is_hd, int nb_ex)
 		i = 2;
 	else
 		i = 3;
-	tab = malloc(sizeof(char **) * nb_ex + 1);
+	tab = malloc(sizeof(char **) * (nb_ex + 1));
 	if (!tab)
 		return (NULL);
-	while (argv[i + 1] != NULL)
+	while (count < nb_ex)
 	{
 		tab[count] = ft_split(argv[i], ' ');
 		if (tab[count][0] == NULL)
@@ -122,7 +122,7 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 		pipe->limiter = ft_strjoin(argv[2], "\n");
 		if (pipe->limiter == NULL)
 			free_pipe(pipe);
-		pipe->nb_exec = argc - 5;
+		pipe->nb_exec = argc - 4;
 	}
 	pipe->cmd = get_all_command(argv, is_hd, pipe->nb_exec);
 	if (pipe->cmd == NULL)

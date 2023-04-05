@@ -18,7 +18,7 @@ void	free_three_char_tab(char ***tab)
 	int j;
 
 	i = 0;
-	while (tab[i])
+	while (tab[i] != NULL)
 	{
 		j = 0;
 		while (tab[i][j])
@@ -26,6 +26,7 @@ void	free_three_char_tab(char ***tab)
 			free(tab[i][j]);
 			j++;
 		}
+		free(tab[i]);
 		i++;
 	}
 }
@@ -45,9 +46,10 @@ void	free_char_tab(char **tab)
 
 void	free_pipe(t_pipe *pipe)
 {
-	//free_three_char_tab(pipe->cmd);
-	//free(pipe->outfile_path);
-	//free(pipe->cmd);
-	//free(pipe);
-	(void)pipe;
+	free_three_char_tab(pipe->cmd);
+	free(pipe->outfile_path);
+	free(pipe->limiter);
+	close(pipe->outfile);
+	free(pipe->cmd);
+	free(pipe);
 }

@@ -36,35 +36,33 @@ void	here_doc(char *limiter)
 {
 	char	*line;
 	char	*here_doc;
+	int 	fd[2];
 
+	pipe(fd);
 	here_doc = NULL;
 	while (1)
 	{
 		ft_printf_fd(STDOUT_FILENO, "> ");
 		line = get_next_line(STDIN_FILENO);
-		dprintf(2, "yo");
 		if (line && ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0) {
-			//free(line); TODO: A VOIR
 			break ;
 		}
 		else
 			here_doc = get_heredoc(here_doc, line);
 	}
-	write(STDOUT_FILENO, here_doc, ft_strlen(here_doc));
-	dprintf(2,"i m here\n");
+	if (line)
+		free(line);
+	line = NULL;
+	write(fd[1], here_doc, ft_strlen(here_doc));
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	free(here_doc);
 }
 
 void	here_doc_exec(t_pipe *pipex)
 {
-	int fd[2];
-
-	pipe(fd);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
-	dprintf(2, "here\n");
 	here_doc(pipex->limiter);
-	printf("there\n");
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+
 }
 
