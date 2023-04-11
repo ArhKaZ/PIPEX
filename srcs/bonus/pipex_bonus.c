@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:30:01 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/27 16:50:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/12 00:36:27 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	exec_pipex(t_pipe *pipex, char **cmd, char **envp, int last)
 		}
 		close(fd[1]);
 		execve(cmd[0], cmd, envp);
+		close(STDIN_FILENO);
 	}
 }
 
@@ -53,7 +54,6 @@ void	forking_bonus(t_pipe *pipex, char **envp)
 	execution = 0;
 	while (execution < pipex->nb_exec)
 	{
-		dprintf(2, "%d\n", execution);
 		if (execution != pipex->nb_exec - 1)
 			exec_pipex(pipex, pipex->cmd[execution], envp, 0);
 		else
@@ -104,6 +104,8 @@ int	open_and_pipe_bonus(char **argv)
 	infile = open(argv[1], O_RDONLY, 0444);
 	if (infile == -1)
 		return (perror(argv[1]), -1);
+	dup2(infile, STDIN_FILENO);
+	close(infile);
 	return (infile);
 }
 
@@ -142,28 +144,17 @@ int main(int argc, char **argv, char **envp)
 {
 	t_pipe	*pipex;
 	bool	is_hd;
-	int		infile;
 
-	infile = 0;
 	is_hd = false;
 	if (argc < 5)
 		return (1);
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1]) + 1) == 0)
-	{
 		is_hd = true;
-	}
 	else
-	{
-		infile = open_and_pipe_bonus(argv);
-		dup2(infile, STDIN_FILENO);
-		close(infile);
-	}
+		open_and_pipe_bonus(argv);
 	pipex = parsing_bonus(argc, argv, envp, is_hd);
-	printf("yoyo\n");
 	if (is_hd == true)
 		here_doc_exec(pipex);
-	dprintf(2,"bloque");
 	forking_bonus(pipex, envp);
-	dprintf(2,"je n'y arrive jamais\n");
 	free_pipe(pipex);
 }
