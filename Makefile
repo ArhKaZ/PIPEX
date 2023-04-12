@@ -9,6 +9,7 @@ SRCS_B			=	exec_bonus.c			\
 					pipex_bonus.c			\
 					verif_command_bonus.c	\
 					here_doc_bonus.c		\
+					parsing_bonus.c			\
 
 SRCS_D			=	srcs/mandatory/
 

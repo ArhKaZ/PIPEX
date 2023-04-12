@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:34:39 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/27 11:25:28 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/12 20:32:24 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ char	*get_path_command(char *command, char **envp);
 void	free_three_char_tab(char ***tab);
 
 void	exec_first_cmd(t_pipe *cmd);
+
+t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd);
+
+int	open_and_pipe_bonus(char **argv);
+
+char	***get_all_command(char **argv, bool is_hd, int nb_ex);
 
 void	exec_cmd_n(t_pipe *cmd, int nb);
 
