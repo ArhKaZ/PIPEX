@@ -104,7 +104,10 @@ int main(int argc, char **argv, char **envp)
 	t_pipe	*cmd;
 
 	if (argc < 2 || argc > 5)
+	{
+		ft_printf_fd(2, "Too much command or arguments");
 		return (1);
+	}
 	cmd = parsing(argv, envp);
 	if (cmd == NULL)
 		exit(EXIT_FAILURE);

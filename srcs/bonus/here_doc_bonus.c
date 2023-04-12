@@ -50,6 +50,7 @@ void	here_doc(char *limiter)
 		else
 			here_doc = get_heredoc(here_doc, line);
 	}
+	get_next_line(-1);
 	if (line)
 		free(line);
 	line = NULL;

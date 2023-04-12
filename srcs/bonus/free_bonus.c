@@ -52,4 +52,7 @@ void	free_pipe(t_pipe *pipe)
 	close(pipe->outfile);
 	free(pipe->cmd);
 	free(pipe);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
 }

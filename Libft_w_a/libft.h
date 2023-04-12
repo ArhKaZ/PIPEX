@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdarg.h>
+# include <errno.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif

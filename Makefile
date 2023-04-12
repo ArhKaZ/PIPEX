@@ -30,6 +30,8 @@ HEAD_D			=	include/
 
 NAME			=	pipex
 
+NAME_B			=	pipex_bonus
+
 LIBFT_D			=	Libft_w_a/
 
 LIBFT_A			=	Libft_w_a/libft.a
@@ -73,7 +75,7 @@ fsanitize		:	$(MLX_A) $(LIBFT_A) $(OBJS_D) $(HEAD_D)$(HEAD) $(OBJS)
 				$(CC) $(CCFLAG) $(FSA) -o $(NAME) $(OBJS) $(LIBFT_A)
 
 bonus			:	$(OBJS_D_B) $(OBJS_B) $(HEAD_D)$(HEAD)
-				$(CC) $(CCFLAG)  -o $(NAME) $(OBJS_B) $(LIBFT_A)
+				$(CC) $(CCFLAG)  -o $(NAME_B) $(OBJS_B) $(LIBFT_A)
 
 all				: $(NAME) bonus
 

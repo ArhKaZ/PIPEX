@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <wait.h>
+# include <errno.h>
 # include <string.h>
 # include "../Libft_w_a/libft.h"
 

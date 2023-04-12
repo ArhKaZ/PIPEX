@@ -25,12 +25,6 @@ void	exec_pipex(t_pipe *pipex, char **cmd, char **envp, int last)
 		ft_printf_fd(STDERR_FILENO, "Error");
 		return (free_pipe(pipex));
 	}
-	if (pid > 0)
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-	}
 	if (pid == 0)
 	{
 		close(fd[0]);
@@ -43,8 +37,12 @@ void	exec_pipex(t_pipe *pipex, char **cmd, char **envp, int last)
 		}
 		close(fd[1]);
 		execve(cmd[0], cmd, envp);
-		close(STDIN_FILENO);
+		perror(cmd[0]);
+		exit(EXIT_FAILURE);
 	}
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 }
 
 void	forking_bonus(t_pipe *pipex, char **envp)
@@ -118,7 +116,10 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 	pipe = malloc(sizeof(t_pipe));
 	pipe->is_hd = is_hd;
 	if (is_hd == false)
+	{
+		pipe->limiter = NULL;
 		pipe->nb_exec = argc - 3;
+	}
 	else
 	{
 		pipe->limiter = ft_strjoin(argv[2], "\n");
