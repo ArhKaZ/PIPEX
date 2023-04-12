@@ -14,8 +14,8 @@
 
 void	forking(t_pipe *cmd)
 {
-	int nb_fork1;
-	int nb_fork2;
+	int	nb_fork1;
+	int	nb_fork2;
 
 	nb_fork1 = fork();
 	if (nb_fork1 < 0)
@@ -99,7 +99,7 @@ t_pipe	*parsing(char **argv, char **envp)
 	return (cmd);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipe	*cmd;
 

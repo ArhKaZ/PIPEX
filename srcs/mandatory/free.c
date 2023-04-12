@@ -39,4 +39,3 @@ void	free_cmd(t_pipe *cmd)
 		close(cmd->fd[1]);
 	free(cmd);
 }
-

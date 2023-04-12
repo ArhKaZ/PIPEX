@@ -14,8 +14,8 @@
 
 void	free_three_char_tab(char ***tab)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (tab[i] != NULL)
@@ -47,6 +47,7 @@ void	free_char_tab(char **tab)
 void	free_pipe(t_pipe *pipe)
 {
 	free_three_char_tab(pipe->cmd);
+	free_char_tab(pipe->envp);
 	free(pipe->outfile_path);
 	free(pipe->limiter);
 	close(pipe->outfile);

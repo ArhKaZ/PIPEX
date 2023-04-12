@@ -32,10 +32,13 @@ typedef struct s_pipe
 	int 	outfile;
 	char 	*limiter;
 	int 	nb_exec;
+	char 	**envp;
 	bool	is_hd;
 }				t_pipe;
 
 void	free_pipe(t_pipe *pipe);
+
+void	exec_pipex(t_pipe *pipex, char **cmd, int last);
 
 char	*get_path_command(char *command, char **envp);
 

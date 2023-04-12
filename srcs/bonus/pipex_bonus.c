@@ -12,52 +12,20 @@
 
 #include "pipex_bonus.h"
 
-void	exec_pipex(t_pipe *pipex, char **cmd, char **envp, int last)
+void	forking_bonus(t_pipe *pipex)
 {
-	int	fd[2];
-	pid_t	pid;
-
-	if (pipe(&fd[0]) == -1)
-		return (free_pipe(pipex));
-	pid = fork();
-	if (pid < 0)
-	{
-		ft_printf_fd(STDERR_FILENO, "Error");
-		return (free_pipe(pipex));
-	}
-	if (pid == 0)
-	{
-		close(fd[0]);
-		if (!last)
-			dup2(fd[1], STDOUT_FILENO);
-		else
-		{
-			dup2(pipex->outfile, STDOUT_FILENO);
-			close(pipex->outfile);
-		}
-		close(fd[1]);
-		execve(cmd[0], cmd, envp);
-		perror(cmd[0]);
-		exit(EXIT_FAILURE);
-	}
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-}
-
-void	forking_bonus(t_pipe *pipex, char **envp)
-{
-	int execution;
+	int	execution;
 
 	execution = 0;
 	while (execution < pipex->nb_exec)
 	{
 		if (execution != pipex->nb_exec - 1)
-			exec_pipex(pipex, pipex->cmd[execution], envp, 0);
+			exec_pipex(pipex, pipex->cmd[execution], 0);
 		else
 		{
-			pipex->outfile = open(pipex->outfile_path,  O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			exec_pipex(pipex, pipex->cmd[execution], envp, 1);
+			pipex->outfile = open(pipex->outfile_path,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			exec_pipex(pipex, pipex->cmd[execution], 1);
 		}
 		execution++;
 	}
@@ -67,9 +35,9 @@ void	forking_bonus(t_pipe *pipex, char **envp)
 
 char	***get_all_command(char **argv, bool is_hd, int nb_ex)
 {
-	char ***tab;
-	int i;
-	int count;
+	char	***tab;
+	int		i;
+	int		count;
 
 	count = 0;
 	if (is_hd == false)
@@ -96,7 +64,7 @@ char	***get_all_command(char **argv, bool is_hd, int nb_ex)
 
 int	open_and_pipe_bonus(char **argv)
 {
-	int infile;
+	int	infile;
 
 	infile = 0;
 	infile = open(argv[1], O_RDONLY, 0444);
@@ -107,6 +75,25 @@ int	open_and_pipe_bonus(char **argv)
 	return (infile);
 }
 
+char	**cp_tab(char **to_cp)
+{
+	int		i;
+	char	**cp;
+
+	i = 0;
+	while (to_cp[i])
+		i++;
+	cp = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (to_cp[i])
+	{
+		cp[i] = ft_strdup(to_cp[i]);
+		i++;
+	}
+	cp[i] = NULL;
+	return (cp);
+}
+
 t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 {
 	t_pipe	*pipe;
@@ -115,6 +102,7 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 	i = 0;
 	pipe = malloc(sizeof(t_pipe));
 	pipe->is_hd = is_hd;
+	pipe->envp = cp_tab(envp);
 	if (is_hd == false)
 	{
 		pipe->limiter = NULL;
@@ -132,7 +120,7 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 		return (free(pipe), NULL);
 	while (i < pipe->nb_exec)
 	{
-		pipe->cmd[i][0] = get_path_command(pipe->cmd[i][0], envp);
+		pipe->cmd[i][0] = get_path_command(pipe->cmd[i][0], pipe->envp);
 		if (pipe->cmd[i][0] == NULL)
 			return (free_pipe(pipe), pipe = NULL, NULL);
 		i++;
@@ -141,7 +129,7 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 	return (pipe);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipe	*pipex;
 	bool	is_hd;
@@ -155,7 +143,7 @@ int main(int argc, char **argv, char **envp)
 		open_and_pipe_bonus(argv);
 	pipex = parsing_bonus(argc, argv, envp, is_hd);
 	if (is_hd == true)
-		here_doc_exec(pipex);
-	forking_bonus(pipex, envp);
+		here_doc(pipex->limiter);
+	forking_bonus(pipex);
 	free_pipe(pipex);
 }

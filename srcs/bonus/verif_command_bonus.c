@@ -31,7 +31,7 @@ char	**get_path(char **envp)
 	char	**path;
 
 	i = 0;
-	while(envp[i] != NULL)
+	while (envp[i] != NULL)
 	{
 		if (envp[i][0] == 'P' && ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
@@ -43,10 +43,10 @@ char	**get_path(char **envp)
 	return (NULL);
 }
 
-char 	*find_right_path(char *command, char **path)
+char	*find_right_path(char *command, char **path)
 {
 	char	*full_path;
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (path[i])
@@ -63,7 +63,7 @@ char 	*find_right_path(char *command, char **path)
 	return (NULL);
 }
 
-char 	*shell_executable(char *command, char **path)
+char	*shell_executable(char *command, char **path)
 {
 	char	*full_path;
 
