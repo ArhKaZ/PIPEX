@@ -47,8 +47,10 @@ void	free_char_tab(char **tab)
 void	free_pipe(t_pipe *pipe)
 {
 	free_three_char_tab(pipe->cmd);
-	free_char_tab(pipe->envp);
-	free(pipe->outfile_path);
+	if (pipe->envp)
+		free_char_tab(pipe->envp);
+	if (pipe->outfile_path)
+		free(pipe->outfile_path);
 	free(pipe->limiter);
 	close(pipe->outfile);
 	free(pipe->cmd);

@@ -12,17 +12,17 @@
 
 #include "../../include/pipex_bonus.h"
 
-int	open_and_pipe_bonus(char **argv)
+bool	open_and_pipe_bonus(char **argv)
 {
-	int	infile;
+	int infile;
 
 	infile = 0;
 	infile = open(argv[1], O_RDONLY, 0444);
-	if (infile == -1)
-		return (perror(argv[1]), -1);
+	if (infile < 0)
+		return (perror(argv[1]), false);
 	dup2(infile, STDIN_FILENO);
 	close(infile);
-	return (infile);
+	return (true);
 }
 
 char	**cp_tab(char **to_cp)
@@ -34,6 +34,8 @@ char	**cp_tab(char **to_cp)
 	while (to_cp[i])
 		i++;
 	cp = malloc(sizeof(char *) * (i + 1));
+	if (!cp)
+		return (NULL);
 	i = 0;
 	while (to_cp[i])
 	{
@@ -67,8 +69,14 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 
 	i = 0;
 	pipe = malloc(sizeof(t_pipe));
+	if (!pipe)
+		return (NULL);
+	pipe->should_last = true;
+	pipe->should_frst = true;
 	pipe->is_hd = is_hd;
 	pipe->envp = cp_tab(envp);
+	if (pipe->envp == NULL)
+		return (free(pipe), NULL);
 	is_it_hd(&pipe, is_hd, argv[2], argc);
 	pipe->cmd = get_all_command(argv, is_hd, pipe->nb_exec);
 	if (pipe->cmd == NULL)
@@ -77,9 +85,11 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 	{
 		pipe->cmd[i][0] = get_path_command(pipe->cmd[i][0], pipe->envp);
 		if (pipe->cmd[i][0] == NULL)
-			return (free_pipe(pipe), pipe = NULL, NULL);
+			return (free(pipe), pipe = NULL, NULL);
 		i++;
 	}
 	pipe->outfile_path = ft_strdup(argv[argc - 1]);
+	if (pipe->outfile_path == NULL)
+		return (free(pipe), NULL);
 	return (pipe);
 }

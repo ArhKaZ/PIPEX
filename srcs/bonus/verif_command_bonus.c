@@ -67,6 +67,7 @@ char	*shell_executable(char *command, char **path)
 {
 	char	*full_path;
 
+	full_path = NULL;
 	full_path = find_right_path(command + 2, path);
 	if (full_path == NULL)
 	{
@@ -94,6 +95,11 @@ char	*get_path_command(char *command, char **envp)
 	path = get_path(envp);
 	if (path == NULL)
 	{
+		ft_printf_fd(STDERR_FILENO, "path not found\n");
+		return (NULL);
+	}
+	if (command == NULL)
+	{
 		ft_printf_fd(STDERR_FILENO, "command not found: %s\n", command);
 		return (NULL);
 	}
@@ -105,9 +111,11 @@ char	*get_path_command(char *command, char **envp)
 		if (full_path == NULL)
 			return (free(command), NULL);
 	}
-	free(command);
 	if (full_path != NULL)
+	{
+		free(command);
 		return (full_path);
+	}
 	ft_printf_fd(STDERR_FILENO, "command not found: %s\n", command);
 	return (free(command), free_char_tab(path), NULL);
 }

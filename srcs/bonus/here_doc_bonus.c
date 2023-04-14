@@ -32,7 +32,32 @@ char	*get_heredoc(char *heredoc, char *line)
 	return (heredoc);
 }
 
-void	here_doc(char *limiter)
+void	write_heredoc(char *here_doc, char *line, int fd[2])
+{
+	get_next_line(-1);
+	if (line)
+		free(line);
+	line = NULL;
+	if (here_doc != NULL)
+		write(fd[1], here_doc, ft_strlen(here_doc));
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	free(here_doc);
+}
+
+void	check_error_heredoc(t_pipe *pipex, char *heredoc)
+{
+	if (errno == ENOMEM)
+	{
+		if (heredoc)
+			free(heredoc);
+		free_pipe(pipex);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	here_doc(t_pipe *pipex)
 {
 	char	*line;
 	char	*here_doc;
@@ -44,19 +69,13 @@ void	here_doc(char *limiter)
 	{
 		ft_printf_fd(STDOUT_FILENO, "> ");
 		line = get_next_line(STDIN_FILENO);
-		if (!line || ft_strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
+		if (!line || ft_strncmp(line, pipex->limiter, ft_strlen(pipex->limiter) + 1) == 0)
+		{
+			check_error_heredoc(pipex, here_doc);
 			break ;
+		}
 		else
 			here_doc = get_heredoc(here_doc, line);
 	}
-	get_next_line(-1);
-	if (line)
-		free(line);
-	line = NULL;
-	if (here_doc != NULL)
-		write(fd[1], here_doc, ft_strlen(here_doc));
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	free(here_doc);
+	write_heredoc(here_doc, line, fd);
 }

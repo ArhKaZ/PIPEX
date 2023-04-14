@@ -33,12 +33,14 @@ typedef struct s_pipe
 	char 	*limiter;
 	int 	nb_exec;
 	char 	**envp;
+	bool	should_frst;
+	bool	should_last;
 	bool	is_hd;
 }				t_pipe;
 
 void	free_pipe(t_pipe *pipe);
 
-void	exec_pipex(t_pipe *pipex, char **cmd, int last);
+void	exec_pipex(t_pipe *pipex, char **cmd, int last, int execution);
 
 char	*get_path_command(char *command, char **envp);
 
@@ -48,7 +50,7 @@ void	exec_first_cmd(t_pipe *cmd);
 
 t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd);
 
-int	open_and_pipe_bonus(char **argv);
+bool	open_and_pipe_bonus(char **argv);
 
 char	***get_all_command(char **argv, bool is_hd, int nb_ex);
 
@@ -58,7 +60,7 @@ void	exec_last_cmd(t_pipe *cmd, int nb);
 
 void	free_char_tab(char **tab);
 
-void	here_doc(char *limiter);
+void	here_doc(t_pipe *pipex);
 
 void	launch_here_doc(t_pipe *pipex);
 

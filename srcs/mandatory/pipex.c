@@ -105,7 +105,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 2 || argc > 5)
 	{
-		ft_printf_fd(2, "Too much command or arguments");
+		ft_printf_fd(2, "Too much or not enough arguments");
 		return (1);
 	}
 	cmd = parsing(argv, envp);
