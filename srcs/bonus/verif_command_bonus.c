@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   verif_command.c                                    :+:      :+:    :+:   */
+/*   verif_command_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 16:02:23 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/14 16:40:19 by syluiset         ###   ########.fr       */
+/*   Created: 2023/04/17 13:36:50 by syluiset          #+#    #+#             */
+/*   Updated: 2023/04/17 13:37:45 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "pipex_bonus.h"
 
 char	*get_full_path(char *path, char *command)
 {
@@ -49,6 +49,15 @@ char	*find_right_path(char *command, char **path)
 	int		i;
 
 	i = 0;
+	if (ft_strncmp(command, "/", 1) == 0)
+	{
+		if (access(command, F_OK | X_OK) != -1)
+		{
+			free_char_tab(path);
+			full_path = ft_strdup(command);
+			return (full_path);
+		}
+	}
 	while (path[i])
 	{
 		full_path = get_full_path(path[i], command);
@@ -91,18 +100,10 @@ char	*get_path_command(char *command, char **envp)
 	char	*full_path;
 
 	if (command == NULL)
-		return (NULL);
+		return (ft_printf_fd(2, "%s : command not found\n", command), NULL);
 	path = get_path(envp);
 	if (path == NULL)
-	{
-		ft_printf_fd(STDERR_FILENO, "path not found\n");
-		return (NULL);
-	}
-	if (command == NULL)
-	{
-		ft_printf_fd(STDERR_FILENO, "command not found: %s\n", command);
-		return (NULL);
-	}
+		return (ft_printf_fd(STDERR_FILENO, "path not found\n"), NULL);
 	if (ft_strncmp(command, "./", 2) != 0)
 		full_path = find_right_path(command, path);
 	else
@@ -116,6 +117,6 @@ char	*get_path_command(char *command, char **envp)
 		free(command);
 		return (full_path);
 	}
-	ft_printf_fd(STDERR_FILENO, "command not found: %s\n", command);
+	ft_printf_fd(STDERR_FILENO, "%s : command not found\n", command);
 	return (free(command), free_char_tab(path), NULL);
 }

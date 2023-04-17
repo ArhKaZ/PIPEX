@@ -15,22 +15,18 @@
 void	child_proc(t_pipe *pipex, int fd[2], int cases, char **cmd)
 {
 	close(fd[0]);
-	if (cases == 0 && pipex->should_frst == false)
-	{
+	if (cases != 2)
 		close(fd[1]);
+	if ((cases == 0 && pipex->should_frst == false) \
+			|| (cases == 1 && pipex->should_last == false))
+	{
+		free_pipe(pipex);
 		exit(EXIT_FAILURE);
 	}
-	if (cases == 1) {
-		if (pipex->should_last == false)
-		{
-			close(fd[1]);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			dup2(pipex->outfile, STDOUT_FILENO);
-			close(pipex->outfile);
-		}
+	if (cases == 1)
+	{
+		dup2(pipex->outfile, STDOUT_FILENO);
+		close(pipex->outfile);
 	}
 	else
 		dup2(fd[1], STDOUT_FILENO);

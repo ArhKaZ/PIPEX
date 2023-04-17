@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:30:24 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/27 11:38:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/17 13:40:59 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,8 @@ void	free_char_tab(char **tab)
 void	free_pipe(t_pipe *pipe)
 {
 	free_three_char_tab(pipe->cmd);
-	if (pipe->envp)
-		free_char_tab(pipe->envp);
-	if (pipe->outfile_path)
-		free(pipe->outfile_path);
+	free(pipe->outfile_path);
 	free(pipe->limiter);
-	close(pipe->outfile);
 	free(pipe->cmd);
 	free(pipe);
 	close(STDIN_FILENO);

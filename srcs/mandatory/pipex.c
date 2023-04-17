@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 11:15:13 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/15 22:06:26 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/17 13:20:29 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	forking(t_pipe *cmd)
 
 bool	open_and_pipe(char **argv, t_pipe *cmd)
 {
-	cmd->infile = open(argv[1], O_RDONLY, 0444);
+	cmd->infile = open(argv[1], O_RDONLY, 0644);
 	if (cmd->infile == -1)
-		return (perror(argv[1]), false);
+		perror(argv[1]);
 	cmd->outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (cmd->outfile == -1)
-		return (perror(argv[4]), false);
+		perror(argv[4]);
 	pipe(cmd->fd);
 	return (true);
 }

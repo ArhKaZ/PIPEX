@@ -69,7 +69,8 @@ void	here_doc(t_pipe *pipex)
 	{
 		ft_printf_fd(STDOUT_FILENO, "> ");
 		line = get_next_line(STDIN_FILENO);
-		if (!line || ft_strncmp(line, pipex->limiter, ft_strlen(pipex->limiter) + 1) == 0)
+		if (!line || ft_strncmp(line, pipex->limiter \
+			, ft_strlen(pipex->limiter) + 1) == 0)
 		{
 			check_error_heredoc(pipex, here_doc);
 			break ;

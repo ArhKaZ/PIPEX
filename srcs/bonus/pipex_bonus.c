@@ -23,11 +23,15 @@ void	forking_bonus(t_pipe *pipex)
 			exec_pipex(pipex, pipex->cmd[execution], 0, execution);
 		else
 		{
-			pipex->outfile = open(pipex->outfile_path,
-								  O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			pipex->outfile = open(pipex->outfile_path, \
+			O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (pipex->outfile < 0)
+			{
+				perror(pipex->outfile_path);
 				pipex->should_last = false;
+			}
 			exec_pipex(pipex, pipex->cmd[execution], 1, execution);
+			close(pipex->outfile);
 		}
 		execution++;
 	}

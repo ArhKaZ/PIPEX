@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:46:20 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/15 21:52:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/17 13:12:07 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	exec_cmd1(t_pipe *cmd)
 {
+	if (cmd->infile < 0)
+		return (free_cmd(cmd), exit(EXIT_FAILURE));
 	if (dup2(cmd->infile, STDIN_FILENO) == -1)
 		return (free_cmd(cmd), exit(EXIT_FAILURE));
 	close(cmd->infile);
@@ -28,6 +30,8 @@ void	exec_cmd1(t_pipe *cmd)
 
 void	exec_cmd2(t_pipe *cmd)
 {
+	if (cmd->outfile < 0)
+		return (free_cmd(cmd), exit(EXIT_FAILURE));
 	if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 		return (free_cmd(cmd), exit(EXIT_FAILURE));
 	close(cmd->fd[0]);

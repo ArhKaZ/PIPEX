@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 20:25:08 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/12 20:31:57 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/17 13:02:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 bool	open_and_pipe_bonus(char **argv)
 {
-	int infile;
+	int	infile;
 
-	infile = 0;
-	infile = open(argv[1], O_RDONLY, 0444);
+	infile = open(argv[1], O_RDONLY, 0644);
 	if (infile < 0)
 		return (perror(argv[1]), false);
 	dup2(infile, STDIN_FILENO);
@@ -62,21 +61,27 @@ void	is_it_hd(t_pipe **pipe, bool is_hd, char *limite, int argc)
 	}
 }
 
-t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
+t_pipe	*create_pipe(bool is_hd, char **envp)
 {
 	t_pipe	*pipe;
-	int		i;
 
-	i = 0;
 	pipe = malloc(sizeof(t_pipe));
 	if (!pipe)
 		return (NULL);
 	pipe->should_last = true;
 	pipe->should_frst = true;
 	pipe->is_hd = is_hd;
-	pipe->envp = cp_tab(envp);
-	if (pipe->envp == NULL)
-		return (free(pipe), NULL);
+	pipe->envp = envp;
+	return (pipe);
+}
+
+t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
+{
+	t_pipe	*pipe;
+	int		i;
+
+	i = 0;
+	pipe = create_pipe(is_hd, envp);
 	is_it_hd(&pipe, is_hd, argv[2], argc);
 	pipe->cmd = get_all_command(argv, is_hd, pipe->nb_exec);
 	if (pipe->cmd == NULL)
