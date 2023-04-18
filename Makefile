@@ -25,6 +25,8 @@ OBJS_D_B		=	obj_b/
 
 HEAD			=	pipex.h
 
+HEAD_B			=	pipex_bonus.h
+
 HEAD_MAP		=	map.h
 
 HEAD_D			=	include/
@@ -60,7 +62,7 @@ $(NAME)			:	$(OBJS_D) $(OBJS) $(HEAD_D)$(HEAD)
 $(OBJS)			:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD_D)$(HEAD) $(LIBFT_A)
 				$(CC) $(CCFLAG) -I$(HEAD_D) -I$(LIBFT_D) -c $< -o $@
 
-$(OBJS_B)		:	$(OBJS_D_B)%.o: $(SRCS_D_B)%.c $(HEAD_D)$(HEAD) $(LIBFT_A)
+$(OBJS_B)		:	$(OBJS_D_B)%.o: $(SRCS_D_B)%.c $(HEAD_D)$(HEAD_B) $(LIBFT_A)
 				$(CC) $(CCFLAG) -I$(HEAD_D) -I$(LIBFT_D) -c $< -o $@
 
 $(OBJS_D)		:
@@ -69,14 +71,16 @@ $(OBJS_D)		:
 $(OBJS_D_B)		:
 				mkdir -p $(OBJS_D_B)
 
-$(LIBFT_A)		:	FORCE
+$(LIBFT_A)		:
 				make -C $(LIBFT_D)
 
 fsanitize		:	$(MLX_A) $(LIBFT_A) $(OBJS_D) $(HEAD_D)$(HEAD) $(OBJS)
 				$(CC) $(CCFLAG) $(FSA) -o $(NAME) $(OBJS) $(LIBFT_A)
 
-bonus			:	$(OBJS_D_B) $(OBJS_B) $(HEAD_D)$(HEAD)
+$(NAME_B)		:	$(OBJS_D_B) $(OBJS_B) $(HEAD_D)$(HEAD_B)
 				$(CC) $(CCFLAG)  -o $(NAME_B) $(OBJS_B) $(LIBFT_A)
+
+bonus			: $(NAME_B)
 
 all				: $(NAME) bonus
 
