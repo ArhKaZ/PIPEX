@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:34:39 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/17 13:03:10 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:54:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 
 typedef struct s_pipe
 {
-	char 	***cmd;
-	int 	fd[2];
-	int 	infile;
+	char	***cmd;
+	int		fd[2];
+	int		infile;
 	char	*outfile_path;
-	int 	outfile;
-	char 	*limiter;
-	int 	nb_exec;
+	int		outfile;
+	char	*limiter;
+	int		nb_exec;
 	char	**envp;
 	bool	should_frst;
 	bool	should_last;

@@ -71,7 +71,7 @@ $(OBJS_D)		:
 $(OBJS_D_B)		:
 				mkdir -p $(OBJS_D_B)
 
-$(LIBFT_A)		:
+$(LIBFT_A)		:	FORCE
 				make -C $(LIBFT_D)
 
 fsanitize		:	$(MLX_A) $(LIBFT_A) $(OBJS_D) $(HEAD_D)$(HEAD) $(OBJS)
@@ -83,6 +83,8 @@ $(NAME_B)		:	$(OBJS_D_B) $(OBJS_B) $(HEAD_D)$(HEAD_B)
 bonus			: $(NAME_B)
 
 all				: $(NAME) bonus
+
+FORCE			:
 
 clean			:
 				$(RM) $(OBJS) $(OBJS_D) $(OBJS_D_B)

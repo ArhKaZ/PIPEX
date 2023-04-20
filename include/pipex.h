@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 11:15:42 by syluiset          #+#    #+#             */
-/*   Updated: 2023/03/14 16:24:05 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/20 11:54:30 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 
 typedef struct s_pipe
 {
-	char 	**cmd1;
-	char 	**cmd2;
-	int 	fd[2];
-	int 	infile;
-	int 	outfile;
+	char	**cmd1;
+	char	**cmd2;
+	int		fd[2];
+	int		infile;
+	int		outfile;
 }				t_pipe;
 
 void	free_char_tab(char **tab);

@@ -44,7 +44,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 
 char	*ft_itoa(int n);
 
-int 	ft_putstr_fd(char *s, int fd);
+int		ft_putstr_fd(char *s, int fd);
 
 void	ft_putendl_fd(char *s, int fd);
 

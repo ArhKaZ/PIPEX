@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 11:15:13 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/17 13:20:29 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:22:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,23 @@ void	forking(t_pipe *cmd)
 
 bool	open_and_pipe(char **argv, t_pipe *cmd)
 {
+	bool	ret;
+
+	ret = true;
 	cmd->infile = open(argv[1], O_RDONLY, 0644);
 	if (cmd->infile == -1)
+	{
 		perror(argv[1]);
+		ret = false;
+	}
 	cmd->outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (cmd->outfile == -1)
+	{
 		perror(argv[4]);
+		ret = false;
+	}
 	pipe(cmd->fd);
-	return (true);
+	return (ret);
 }
 
 t_pipe	*commands_in_cmd(char **argv)
@@ -84,17 +93,18 @@ t_pipe	*parsing(char **argv, char **envp)
 	cmd = commands_in_cmd(argv);
 	if (cmd == NULL)
 		return (NULL);
+	if (open_and_pipe(argv, cmd) == false)
+	{
+		free_cmd(cmd);
+		cmd = NULL;
+		return (cmd);
+	}
 	cmd->cmd1[0] = get_path_command(cmd->cmd1[0], envp);
 	cmd->cmd2[0] = get_path_command(cmd->cmd2[0], envp);
 	if (cmd->cmd1[0] == NULL || cmd->cmd2[0] == NULL)
 	{
 		free_cmd(cmd);
-		return (cmd = NULL, NULL);
-	}
-	if (open_and_pipe(argv, cmd) == false)
-	{
-		free_cmd(cmd);
-		cmd = NULL;
+		return (NULL);
 	}
 	return (cmd);
 }
