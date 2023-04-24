@@ -97,7 +97,7 @@ char	*get_path_command(char *command, char **envp)
 	char	*full_path;
 
 	if (command == NULL)
-		return (ft_printf_fd(2, "%s : command not found\n", command), NULL);
+		return (NULL);
 	path = get_path(envp);
 	if (path == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:30:01 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/24 15:03:20 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:12:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,22 @@ void	forking_bonus(t_pipe *pipex)
 	execution = 0;
 	while (execution < pipex->nb_exec)
 	{
-		if (execution != pipex->nb_exec - 1)
-			exec_pipex(pipex, pipex->cmd[execution], 0, execution);
-		else
+		if (pipex->cmd[execution][0] != NULL)
 		{
-			pipex->outfile = open(pipex->outfile_path, \
-			O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (pipex->outfile < 0)
+			if (execution != pipex->nb_exec - 1)
+				exec_pipex(pipex, pipex->cmd[execution], 0, execution);
+			else
 			{
-				perror(pipex->outfile_path);
-				pipex->should_last = false;
+				pipex->outfile = open(pipex->outfile_path, \
+				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				if (pipex->outfile < 0)
+				{
+					perror(pipex->outfile_path);
+					pipex->should_last = false;
+				}
+				exec_pipex(pipex, pipex->cmd[execution], 1, execution);
+				close(pipex->outfile);
 			}
-			exec_pipex(pipex, pipex->cmd[execution], 1, execution);
-			close(pipex->outfile);
 		}
 		execution++;
 	}

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 16:02:23 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/24 14:08:04 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:11:39 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*get_path_command(char *command, char **envp)
 	char	*full_path;
 
 	if (command == NULL)
-		return (ft_printf_fd(2, "%s : command not found\n", command), NULL);
+		return (NULL);
 	path = get_path(envp);
 	if (path == NULL)
 	{

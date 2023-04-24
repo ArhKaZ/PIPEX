@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 11:15:13 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/24 13:57:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:16:56 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,9 @@ t_pipe	*commands_in_cmd(char **argv)
 	cmd->cmd1 = ft_split(argv[2], ' ');
 	cmd->cmd2 = ft_split(argv[3], ' ');
 	if (cmd->cmd1[0] == NULL)
-	{
 		ft_putstr_fd("permission denied: \n", STDERR_FILENO);
-		free_cmd(cmd);
-		return (cmd = NULL, NULL);
-	}
 	if (cmd->cmd2[0] == NULL)
-	{
 		ft_putstr_fd("permission denied: \n", STDERR_FILENO);
-		free_cmd(cmd);
-		return (cmd = NULL, NULL);
-	}
 	cmd->infile = -1;
 	cmd->outfile = -1;
 	cmd->fd[0] = -1;
@@ -93,19 +85,9 @@ t_pipe	*parsing(char **argv, char **envp)
 	cmd = commands_in_cmd(argv);
 	if (cmd == NULL)
 		return (NULL);
-	if (open_and_pipe(argv, cmd) == false)
-	{
-		free_cmd(cmd);
-		cmd = NULL;
-		return (cmd);
-	}
+	open_and_pipe(argv, cmd);
 	cmd->cmd1[0] = get_path_command(cmd->cmd1[0], envp);
 	cmd->cmd2[0] = get_path_command(cmd->cmd2[0], envp);
-	if (cmd->cmd1[0] == NULL || cmd->cmd2[0] == NULL)
-	{
-		free_cmd(cmd);
-		return (NULL);
-	}
 	return (cmd);
 }
 
