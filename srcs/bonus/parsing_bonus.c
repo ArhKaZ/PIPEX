@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 20:25:08 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/20 14:19:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:02:35 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 	is_it_hd(&pipe, is_hd, argv[2], argc);
 	pipe->cmd = get_all_command(argv, is_hd, pipe->nb_exec);
 	if (pipe->cmd == NULL)
-		return (free(pipe), NULL);
+	{
+		free_pipe(pipe);
+		return (NULL);
+	}
 	while (i < pipe->nb_exec)
 	{
 		pipe->cmd[i][0] = get_path_command(pipe->cmd[i][0], pipe->envp);

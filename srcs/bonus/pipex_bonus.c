@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:30:01 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/12 20:26:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:03:20 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	main(int argc, char **argv, char **envp)
 	else
 		should_first = open_and_pipe_bonus(argv);
 	pipex = parsing_bonus(argc, argv, envp, is_hd);
+	if (pipex == NULL)
+		return (1);
 	pipex->should_frst = should_first;
 	if (is_hd == true)
 		here_doc(pipex);

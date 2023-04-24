@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 10:46:20 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/17 13:12:07 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/24 14:06:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec_cmd1(t_pipe *cmd)
 	close(cmd->fd[0]);
 	close(cmd->fd[1]);
 	execve(cmd->cmd1[0], cmd->cmd1, NULL);
-	perror("execve");
+	perror(cmd->cmd1[0]);
 	exit(EXIT_FAILURE);
 }
 
@@ -39,6 +39,6 @@ void	exec_cmd2(t_pipe *cmd)
 		return (free_cmd(cmd), exit(EXIT_FAILURE));
 	close(cmd->outfile);
 	execve(cmd->cmd2[0], cmd->cmd2, NULL);
-	perror("execve");
+	perror(cmd->cmd2[0]);
 	exit(EXIT_FAILURE);
 }

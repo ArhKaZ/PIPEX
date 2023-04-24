@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 11:15:13 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/20 14:22:15 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/24 13:57:39 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipe	*cmd;
 
-	if (argc < 2 || argc > 5)
+	if (argc != 5)
 	{
 		ft_printf_fd(2, "Too much or not enough arguments");
 		return (1);
