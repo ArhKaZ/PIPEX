@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 20:25:08 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/24 15:11:43 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:36:28 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ t_pipe	*parsing_bonus(int argc, char **argv, char **envp, bool is_hd)
 	while (i < pipe->nb_exec)
 	{
 		pipe->cmd[i][0] = get_path_command(pipe->cmd[i][0], pipe->envp);
-		//if (pipe->cmd[i][0] == NULL)
-			//return (free(pipe), pipe = NULL, NULL);
 		i++;
 	}
 	pipe->outfile_path = ft_strdup(argv[argc - 1]);

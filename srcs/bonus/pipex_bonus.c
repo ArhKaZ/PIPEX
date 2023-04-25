@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:30:01 by syluiset          #+#    #+#             */
-/*   Updated: 2023/04/24 15:12:47 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:35:42 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	forking_bonus(t_pipe *pipex)
 {
 	int	execution;
 
-	execution = 0;
-	while (execution < pipex->nb_exec)
+	execution = -1;
+	while (++execution < pipex->nb_exec)
 	{
 		if (pipex->cmd[execution][0] != NULL)
 		{
@@ -36,7 +36,6 @@ void	forking_bonus(t_pipe *pipex)
 				close(pipex->outfile);
 			}
 		}
-		execution++;
 	}
 	while (execution--)
 		wait(NULL);
@@ -60,10 +59,7 @@ char	***get_all_command(char **argv, bool is_hd, int nb_ex)
 	{
 		tab[count] = ft_split(argv[i], ' ');
 		if (tab[count][0] == NULL)
-		{
-			free_three_char_tab(tab);
-			return (ft_printf_fd(STDERR_FILENO, "permission denied:"), NULL);
-		}
+			ft_printf_fd(STDERR_FILENO, "permission denied : ");
 		i++;
 		count++;
 	}
